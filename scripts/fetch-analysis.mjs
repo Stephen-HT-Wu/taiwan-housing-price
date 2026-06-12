@@ -124,6 +124,17 @@ function olsRegression(y, X, variableNames) {
     variableNames: ['const', ...variableNames],
   };
 }
+function forwardFill(values) {
+  let last = null;
+  return values.map((v) => {
+    if (v != null && !Number.isNaN(v)) {
+      last = v;
+      return v;
+    }
+    return last ?? 0;
+  });
+}
+
 function correlationMatrix(columns) {
   const keys = Object.keys(columns);
   const out = {};
@@ -740,6 +751,9 @@ async function main() {
     cpi_index: recent.map((r) => r.cpiIndex ?? 0),
     cpi_inflation: recent.map((r) => r.cpiInflation ?? 0),
     price_to_income_ratio: recent.map((r) => r.priceToIncomeRatio ?? 0),
+    national_housing_index: forwardFill(
+      recent.map((r) => r.nationalHousingIndex),
+    ),
   };
 
   const output = {

@@ -61,7 +61,8 @@
       "fed_assets_bn": 0.4957435544669894,
       "cpi_index": 0.9730057731917549,
       "cpi_inflation": 0.4623847940160396,
-      "price_to_income_ratio": 0.1961963419841831
+      "price_to_income_ratio": 0.1961963419841831,
+      "national_housing_index": 0.9929773342055503
     },
     "housing_index": {
       "housing_unit_price": 0.9999996118715481,
@@ -78,7 +79,8 @@
       "fed_assets_bn": 0.49591501937732524,
       "cpi_index": 0.9729759411219205,
       "cpi_inflation": 0.46268796624968056,
-      "price_to_income_ratio": 0.1964670822903262
+      "price_to_income_ratio": 0.1964670822903262,
+      "national_housing_index": 0.9929883876345376
     },
     "taiex_close": {
       "housing_unit_price": 0.8734705552009595,
@@ -95,7 +97,8 @@
       "fed_assets_bn": 0.4314267226968971,
       "cpi_index": 0.8793217447560361,
       "cpi_inflation": 0.35037794357162494,
-      "price_to_income_ratio": -0.14025105262031148
+      "price_to_income_ratio": -0.14025105262031148,
+      "national_housing_index": 0.8619391714792218
     },
     "taiex_return": {
       "housing_unit_price": 0.11181196532629228,
@@ -112,7 +115,8 @@
       "fed_assets_bn": 0.04424598808237787,
       "cpi_index": 0.11935879784567349,
       "cpi_inflation": -0.16330162405800763,
-      "price_to_income_ratio": -0.18697302432986587
+      "price_to_income_ratio": -0.18697302432986587,
+      "national_housing_index": 0.10843570062794647
     },
     "rediscount_rate": {
       "housing_unit_price": 0.8891711658467155,
@@ -129,7 +133,8 @@
       "fed_assets_bn": 0.23082847177494284,
       "cpi_index": 0.9348597972667022,
       "cpi_inflation": 0.3771172191319012,
-      "price_to_income_ratio": 0.11449121439443248
+      "price_to_income_ratio": 0.11449121439443248,
+      "national_housing_index": 0.9127602139456573
     },
     "mortgage_rate": {
       "housing_unit_price": 0.8293418428764671,
@@ -146,7 +151,8 @@
       "fed_assets_bn": 0.08983601247004663,
       "cpi_index": 0.8957658003831502,
       "cpi_inflation": 0.31594091238179267,
-      "price_to_income_ratio": 0.03604558091750097
+      "price_to_income_ratio": 0.03604558091750097,
+      "national_housing_index": 0.8535208897210186
     },
     "m2_level": {
       "housing_unit_price": 0.9742106865402412,
@@ -163,7 +169,8 @@
       "fed_assets_bn": 0.5847642557238978,
       "cpi_index": 0.9794853754422889,
       "cpi_inflation": 0.48536045264966204,
-      "price_to_income_ratio": 0.12273143334157095
+      "price_to_income_ratio": 0.12273143334157095,
+      "national_housing_index": 0.9831469751783142
     },
     "m2_log": {
       "housing_unit_price": 0.9691890738279483,
@@ -180,7 +187,8 @@
       "fed_assets_bn": 0.6254166415097802,
       "cpi_index": 0.9696998703410536,
       "cpi_inflation": 0.5036106963024498,
-      "price_to_income_ratio": 0.14622833873420651
+      "price_to_income_ratio": 0.14622833873420651,
+      "national_housing_index": 0.9787905813763131
     },
     "m2_yoy": {
       "housing_unit_price": 0.16601800597204328,
@@ -197,7 +205,8 @@
       "fed_assets_bn": 0.8344862398744086,
       "cpi_index": 0.0838917626237862,
       "cpi_inflation": 0.41016872526626075,
-      "price_to_income_ratio": 0.2168965160884608
+      "price_to_income_ratio": 0.2168965160884608,
+      "national_housing_index": 0.1635050716504805
     },
     "usd_twd": {
       "housing_unit_price": 0.5061783866862916,
@@ -214,7 +223,8 @@
       "fed_assets_bn": -0.20919110850694184,
       "cpi_index": 0.5389293787252672,
       "cpi_inflation": 0.07653832081517162,
-      "price_to_income_ratio": 0.037674075487386896
+      "price_to_income_ratio": 0.037674075487386896,
+      "national_housing_index": 0.5164787377481501
     },
     "fed_funds_rate": {
       "housing_unit_price": 0.7106343531931257,
@@ -231,7 +241,8 @@
       "fed_assets_bn": 0.08343487350696072,
       "cpi_index": 0.777875929268873,
       "cpi_inflation": 0.35301100048990236,
-      "price_to_income_ratio": 0.17267583430501368
+      "price_to_income_ratio": 0.17267583430501368,
+      "national_housing_index": 0.7516787525052264
     },
     "fed_assets_bn": {
       "housing_unit_price": 0.4957435544669894,
@@ -248,7 +259,8 @@
       "fed_assets_bn": 1,
       "cpi_index": 0.444461199346878,
       "cpi_inflation": 0.5670202052372391,
-      "price_to_income_ratio": 0.29907030703209636
+      "price_to_income_ratio": 0.29907030703209636,
+      "national_housing_index": 0.5157084191467793
     },
     "cpi_index": {
       "housing_unit_price": 0.9730057731917549,
@@ -265,7 +277,8 @@
       "fed_assets_bn": 0.444461199346878,
       "cpi_index": 1,
       "cpi_inflation": 0.48856406668417474,
-      "price_to_income_ratio": 0.10080829473438845
+      "price_to_income_ratio": 0.10080829473438845,
+      "national_housing_index": 0.9836786842544831
     },
     "cpi_inflation": {
       "housing_unit_price": 0.4623847940160396,
@@ -282,7 +295,8 @@
       "fed_assets_bn": 0.5670202052372391,
       "cpi_index": 0.48856406668417474,
       "cpi_inflation": 1,
-      "price_to_income_ratio": 0.258352940228555
+      "price_to_income_ratio": 0.258352940228555,
+      "national_housing_index": 0.49038624463493563
     },
     "price_to_income_ratio": {
       "housing_unit_price": 0.1961963419841831,
@@ -299,7 +313,26 @@
       "fed_assets_bn": 0.29907030703209636,
       "cpi_index": 0.10080829473438845,
       "cpi_inflation": 0.258352940228555,
-      "price_to_income_ratio": 1
+      "price_to_income_ratio": 1,
+      "national_housing_index": 0.19758704961983486
+    },
+    "national_housing_index": {
+      "housing_unit_price": 0.9929773342055503,
+      "housing_index": 0.9929883876345376,
+      "taiex_close": 0.8619391714792218,
+      "taiex_return": 0.10843570062794647,
+      "rediscount_rate": 0.9127602139456573,
+      "mortgage_rate": 0.8535208897210186,
+      "m2_level": 0.9831469751783142,
+      "m2_log": 0.9787905813763131,
+      "m2_yoy": 0.1635050716504805,
+      "usd_twd": 0.5164787377481501,
+      "fed_funds_rate": 0.7516787525052264,
+      "fed_assets_bn": 0.5157084191467793,
+      "cpi_index": 0.9836786842544831,
+      "cpi_inflation": 0.49038624463493563,
+      "price_to_income_ratio": 0.19758704961983486,
+      "national_housing_index": 1
     }
   },
   "timeSeries": [

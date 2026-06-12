@@ -1,7 +1,12 @@
 import { useMemo, useState } from 'react';
 import type { MultivariateAnalysis } from '../types';
 import { formatPct } from '../lib/analysis';
+import { CausalIndicatorsPanel } from './CausalIndicatorsPanel';
 import { MACRO_TIMELINE_EVENTS, type TimelineEvent } from '../lib/timeline-events';
+import { seriesToPath } from '../lib/chart-axis';
+import { firstValidIndex } from '../lib/cross-correlation';
+import { TREND_CHART_SERIES } from '../lib/indicator-roles';
+import { seriesAsYoy } from '../lib/time-series-values';
 
 interface AnalysisPanelProps {
   data: MultivariateAnalysis;
@@ -122,11 +127,12 @@ export function AnalysisPanel({ data }: AnalysisPanelProps) {
         </div>
       </section>
 
+      <CausalIndicatorsPanel timeSeries={data.timeSeries} />
+
       <section className="analysis-section">
-        <h2>時間序列（標準化趨勢）</h2>
+        <h2>時間序列（年增率，標準化）</h2>
         <p className="analysis-note">
-          各指標為標準化趨勢（半透明線條）；可勾選圖例顯示或隱藏。垂直虛線為重大事件。
-          全國住宅價格指數（105年＝100）與房價所得比為內政部季資料，季內月份取同值；臺北住宅單價為北市月指數。
+          各指標皆為<strong>年增率（%）</strong>後標準化（0–1）以便疊圖；與 lag 探索器口徑一致。季資料（全國房價指數、房價所得比）季內取同值。
         </p>
         <TrendChart data={data.timeSeries} events={MACRO_TIMELINE_EVENTS} />
       </section>
@@ -154,24 +160,12 @@ export function AnalysisPanel({ data }: AnalysisPanelProps) {
 }
 
 function normalizeSeries(values: number[]): number[] {
-  const min = Math.min(...values);
-  const max = Math.max(...values);
+  const finite = values.filter((v) => Number.isFinite(v));
+  if (finite.length === 0) return values.map(() => NaN);
+  const min = Math.min(...finite);
+  const max = Math.max(...finite);
   const span = max - min || 1;
-  return values.map((v) => (v - min) / span);
-}
-
-type TimeSeriesRow = MultivariateAnalysis['timeSeries'][number];
-type NumericSeriesKey = {
-  [K in keyof TimeSeriesRow]: TimeSeriesRow[K] extends number | null ? K : never;
-}[keyof TimeSeriesRow];
-
-function filledSeries(data: MultivariateAnalysis['timeSeries'], key: NumericSeriesKey): number[] {
-  let last = 0;
-  return data.map((row) => {
-    const v = row[key];
-    if (typeof v === 'number' && !Number.isNaN(v)) last = v;
-    return last;
-  });
+  return values.map((v) => (Number.isFinite(v) ? (v - min) / span : NaN));
 }
 
 function monthToX(
@@ -208,31 +202,14 @@ function getYearAxisTicks(
   return ticks;
 }
 
-const TREND_SERIES = [
-  { key: 'nationalHousingIndex', label: '全國住宅價格指數', color: '#f46d43' },
-  { key: 'housingUnitPrice', label: '臺北住宅單價', color: '#fb7185' },
-  { key: 'taiexClose', label: '台股', color: '#3d8bfd' },
-  { key: 'm2Level', label: 'M2 總數', color: '#f472b6' },
-  { key: 'm2Log', label: 'log(M2)', color: '#fb923c' },
-  { key: 'm2Yoy', label: 'M2 年增率', color: '#eab308' },
-  { key: 'cpiInflation', label: '通膨率', color: '#ef4444' },
-  { key: 'cpiIndex', label: 'CPI 指數', color: '#f87171' },
-  { key: 'mortgageRate', label: '房貸利率', color: '#a855f7' },
-  { key: 'fedFundsRate', label: '美國基準利率', color: '#22c55e' },
-  { key: 'priceToIncomeRatio', label: '房價所得比（全國）', color: '#14b8a6' },
-] as const;
-
-type TrendSeriesKey = (typeof TREND_SERIES)[number]['key'];
+type TrendSeriesKey = (typeof TREND_CHART_SERIES)[number]['key'];
 
 const DEFAULT_VISIBLE: Record<TrendSeriesKey, boolean> = {
   nationalHousingIndex: true,
   housingUnitPrice: false,
   taiexClose: true,
-  m2Level: false,
-  m2Log: false,
   m2Yoy: true,
   cpiInflation: true,
-  cpiIndex: false,
   mortgageRate: true,
   fedFundsRate: true,
   priceToIncomeRatio: true,
@@ -264,19 +241,27 @@ function TrendChart({
   const yearTicks = getYearAxisTicks(months, plotLeft, plotWidth);
   const [visible, setVisible] = useState(DEFAULT_VISIBLE);
 
+  const startIdx = useMemo(() => {
+    const samples = TREND_CHART_SERIES.map((s) => seriesAsYoy(data, s.key));
+    return Math.max(firstValidIndex(...samples), 0);
+  }, [data]);
+
+  const toY = (v: number) => plotBottom - v * (plotBottom - plotTop - padY);
+  const toX = (i: number) => plotLeft + (i / (n - 1)) * plotWidth;
+
   const paths = useMemo(
     () =>
-      TREND_SERIES.map((s) => {
-        const values = filledSeries(data, s.key);
-        const norm = normalizeSeries(values);
-        const points = norm.map((v, i) => {
-          const x = plotLeft + (i / (n - 1)) * plotWidth;
-          const y = plotBottom - v * (plotBottom - plotTop - padY);
-          return `${x},${y}`;
-        });
-        return { ...s, d: `M ${points.join(' L ')}` };
+      TREND_CHART_SERIES.map((s) => {
+        const yoy = seriesAsYoy(data, s.key);
+        const norm = normalizeSeries(
+          yoy.map((v) => (Number.isFinite(v) ? v : NaN)),
+        );
+        return {
+          ...s,
+          d: seriesToPath(norm, startIdx, n, toX, toY),
+        };
       }),
-    [data, n, plotBottom, plotLeft, plotTop, plotWidth],
+    [data, n, plotBottom, plotLeft, plotTop, plotWidth, startIdx],
   );
 
   const toggleSeries = (key: TrendSeriesKey) => {
@@ -295,7 +280,7 @@ function TrendChart({
     <div className="trend-chart">
       <div className="trend-chart-plot">
         <svg viewBox={`0 0 ${w} ${totalH}`} className="trend-svg" role="img">
-          <title>2018–2026 全國房價指數、台股、M2、房貸與美國利率標準化趨勢</title>
+          <title>2018–2026 各指標年增率標準化趨勢</title>
           {paths.map((p) =>
             visible[p.key] ? (
               <path
@@ -395,7 +380,7 @@ function TrendChart({
         </div>
       </div>
       <div className="trend-legend">
-        {TREND_SERIES.map((s) => (
+        {TREND_CHART_SERIES.map((s) => (
           <label
             key={s.key}
             className={`trend-legend-item trend-legend-toggle${visible[s.key] ? '' : ' trend-legend-item--off'}`}

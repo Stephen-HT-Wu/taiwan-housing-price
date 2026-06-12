@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-06-12T08:39:21.316Z",
-  "description": "以臺北市標準住宅單價（萬元/坪）為應變數之多元線性迴歸；partial R² 為該變數的邊際解釋力。",
+  "updatedAt": "2026-06-12T10:46:24.251Z",
+  "description": "以臺北市標準住宅單價（萬元/坪）為應變數之多元線性迴歸；納入台股、房貸利率、M2 與美國聯邦基金利率。",
   "period": {
     "start": "2018-01",
     "end": "2026-02"
@@ -11,38 +11,38 @@
     "label": "臺北市標準住宅單價（萬元/坪）"
   },
   "model": {
-    "r2": 0.9119813735256854,
-    "adjR2": 0.9081956261504461,
-    "intercept": 35.218821958544616
+    "r2": 0.9051031561059054,
+    "adjR2": 0.9010215714222884,
+    "intercept": 28.336033675985163
   },
   "variables": [
     {
+      "id": "m2_yoy",
+      "label": "M2 年增率",
+      "coefficient": 0.8032525341099301,
+      "stdCoefficient": 0.28192897731113337,
+      "partialR2": 0.2510834714319071
+    },
+    {
       "id": "taiex_close",
       "label": "加權指數（收盤）",
-      "coefficient": 0.0005887348258289404,
-      "stdCoefficient": 0.6063817062258853,
-      "partialR2": 0.5438789804939769
+      "coefficient": 0.0003267895752765426,
+      "stdCoefficient": 0.33658484522979165,
+      "partialR2": 0.15005613065732662
     },
     {
-      "id": "rediscount_rate",
-      "label": "央行重貼現率",
-      "coefficient": 7.993347472134076,
-      "stdCoefficient": 0.46883849372668207,
-      "partialR2": 0.4908960421681087
+      "id": "mortgage_rate",
+      "label": "五大銀行新承作房貸利率",
+      "coefficient": 10.601107675333878,
+      "stdCoefficient": 0.694186768297274,
+      "partialR2": 0.14074845301383226
     },
     {
-      "id": "log_transaction_count",
-      "label": "實價登錄成交量（log）",
-      "coefficient": -0.7396625983126484,
-      "stdCoefficient": -0.1074706423415544,
-      "partialR2": 0.07784141940313989
-    },
-    {
-      "id": "taiex_return",
-      "label": "加權指數月報酬率",
-      "coefficient": -8.16841973721661,
-      "stdCoefficient": -0.08850497826317126,
-      "partialR2": 0.0750036672927228
+      "id": "fed_funds_rate",
+      "label": "美國聯邦基金利率",
+      "coefficient": -0.04330315008633079,
+      "stdCoefficient": -0.016066231299710878,
+      "partialR2": 0.0001700480567279915
     }
   ],
   "correlation": {
@@ -52,7 +52,16 @@
       "taiex_close": 0.8734705552009595,
       "taiex_return": 0.11181196532629228,
       "rediscount_rate": 0.8891711658467155,
-      "transaction_count": 0.2542782668237553
+      "mortgage_rate": 0.8293418428764671,
+      "m2_level": 0.9742106865402412,
+      "m2_log": 0.9691890738279483,
+      "m2_yoy": 0.16601800597204328,
+      "usd_twd": 0.5061783866862916,
+      "fed_funds_rate": 0.7106343531931257,
+      "fed_assets_bn": 0.4957435544669894,
+      "cpi_index": 0.9730057731917549,
+      "cpi_inflation": 0.4623847940160396,
+      "price_to_income_ratio": 0.1961963419841831
     },
     "housing_index": {
       "housing_unit_price": 0.9999996118715481,
@@ -60,7 +69,16 @@
       "taiex_close": 0.8733394954304187,
       "taiex_return": 0.11170117612505504,
       "rediscount_rate": 0.8891550535501263,
-      "transaction_count": 0.25404884796828614
+      "mortgage_rate": 0.8292803873054363,
+      "m2_level": 0.974185704769122,
+      "m2_log": 0.9691814051864712,
+      "m2_yoy": 0.16622890854873665,
+      "usd_twd": 0.5062113454760698,
+      "fed_funds_rate": 0.7107049986360308,
+      "fed_assets_bn": 0.49591501937732524,
+      "cpi_index": 0.9729759411219205,
+      "cpi_inflation": 0.46268796624968056,
+      "price_to_income_ratio": 0.1964670822903262
     },
     "taiex_close": {
       "housing_unit_price": 0.8734705552009595,
@@ -68,7 +86,16 @@
       "taiex_close": 1,
       "taiex_return": 0.26287758650506676,
       "rediscount_rate": 0.7298214278578946,
-      "transaction_count": 0.5675672428561939
+      "mortgage_rate": 0.6879220294038176,
+      "m2_level": 0.900035486661413,
+      "m2_log": 0.8884333098092442,
+      "m2_yoy": 0.23783061317433135,
+      "usd_twd": 0.25232460002563206,
+      "fed_funds_rate": 0.480013132051962,
+      "fed_assets_bn": 0.4314267226968971,
+      "cpi_index": 0.8793217447560361,
+      "cpi_inflation": 0.35037794357162494,
+      "price_to_income_ratio": -0.14025105262031148
     },
     "taiex_return": {
       "housing_unit_price": 0.11181196532629228,
@@ -76,7 +103,16 @@
       "taiex_close": 0.26287758650506676,
       "taiex_return": 1,
       "rediscount_rate": 0.11145321474312025,
-      "transaction_count": 0.1940886331898578
+      "mortgage_rate": 0.1007360314793878,
+      "m2_level": 0.1443403093410328,
+      "m2_log": 0.13962531310264556,
+      "m2_yoy": 0.025641465485713676,
+      "usd_twd": -0.03383942358087478,
+      "fed_funds_rate": 0.08075150155502045,
+      "fed_assets_bn": 0.04424598808237787,
+      "cpi_index": 0.11935879784567349,
+      "cpi_inflation": -0.16330162405800763,
+      "price_to_income_ratio": -0.18697302432986587
     },
     "rediscount_rate": {
       "housing_unit_price": 0.8891711658467155,
@@ -84,15 +120,186 @@
       "taiex_close": 0.7298214278578946,
       "taiex_return": 0.11145321474312025,
       "rediscount_rate": 1,
-      "transaction_count": 0.21030153423153386
+      "mortgage_rate": 0.9821755777649412,
+      "m2_level": 0.8758640044006236,
+      "m2_log": 0.8572388519591366,
+      "m2_yoy": -0.15325879974476173,
+      "usd_twd": 0.7260333097134701,
+      "fed_funds_rate": 0.9307187573144396,
+      "fed_assets_bn": 0.23082847177494284,
+      "cpi_index": 0.9348597972667022,
+      "cpi_inflation": 0.3771172191319012,
+      "price_to_income_ratio": 0.11449121439443248
     },
-    "transaction_count": {
-      "housing_unit_price": 0.2542782668237553,
-      "housing_index": 0.25404884796828614,
-      "taiex_close": 0.5675672428561939,
-      "taiex_return": 0.1940886331898578,
-      "rediscount_rate": 0.21030153423153386,
-      "transaction_count": 1
+    "mortgage_rate": {
+      "housing_unit_price": 0.8293418428764671,
+      "housing_index": 0.8292803873054363,
+      "taiex_close": 0.6879220294038176,
+      "taiex_return": 0.1007360314793878,
+      "rediscount_rate": 0.9821755777649412,
+      "mortgage_rate": 1,
+      "m2_level": 0.8127656811654829,
+      "m2_log": 0.7870443474449872,
+      "m2_yoy": -0.2888936386414403,
+      "usd_twd": 0.7580284137849824,
+      "fed_funds_rate": 0.9299982581411715,
+      "fed_assets_bn": 0.08983601247004663,
+      "cpi_index": 0.8957658003831502,
+      "cpi_inflation": 0.31594091238179267,
+      "price_to_income_ratio": 0.03604558091750097
+    },
+    "m2_level": {
+      "housing_unit_price": 0.9742106865402412,
+      "housing_index": 0.974185704769122,
+      "taiex_close": 0.900035486661413,
+      "taiex_return": 0.1443403093410328,
+      "rediscount_rate": 0.8758640044006236,
+      "mortgage_rate": 0.8127656811654829,
+      "m2_level": 1,
+      "m2_log": 0.9984265163318772,
+      "m2_yoy": 0.2482129519490566,
+      "usd_twd": 0.4210064200958842,
+      "fed_funds_rate": 0.6899957491553513,
+      "fed_assets_bn": 0.5847642557238978,
+      "cpi_index": 0.9794853754422889,
+      "cpi_inflation": 0.48536045264966204,
+      "price_to_income_ratio": 0.12273143334157095
+    },
+    "m2_log": {
+      "housing_unit_price": 0.9691890738279483,
+      "housing_index": 0.9691814051864712,
+      "taiex_close": 0.8884333098092442,
+      "taiex_return": 0.13962531310264556,
+      "rediscount_rate": 0.8572388519591366,
+      "mortgage_rate": 0.7870443474449872,
+      "m2_level": 0.9984265163318772,
+      "m2_log": 1,
+      "m2_yoy": 0.29357912202952685,
+      "usd_twd": 0.3958152868814264,
+      "fed_funds_rate": 0.6724636054656885,
+      "fed_assets_bn": 0.6254166415097802,
+      "cpi_index": 0.9696998703410536,
+      "cpi_inflation": 0.5036106963024498,
+      "price_to_income_ratio": 0.14622833873420651
+    },
+    "m2_yoy": {
+      "housing_unit_price": 0.16601800597204328,
+      "housing_index": 0.16622890854873665,
+      "taiex_close": 0.23783061317433135,
+      "taiex_return": 0.025641465485713676,
+      "rediscount_rate": -0.15325879974476173,
+      "mortgage_rate": -0.2888936386414403,
+      "m2_level": 0.2482129519490566,
+      "m2_log": 0.29357912202952685,
+      "m2_yoy": 1,
+      "usd_twd": -0.49206199635357445,
+      "fed_funds_rate": -0.28538055000691154,
+      "fed_assets_bn": 0.8344862398744086,
+      "cpi_index": 0.0838917626237862,
+      "cpi_inflation": 0.41016872526626075,
+      "price_to_income_ratio": 0.2168965160884608
+    },
+    "usd_twd": {
+      "housing_unit_price": 0.5061783866862916,
+      "housing_index": 0.5062113454760698,
+      "taiex_close": 0.25232460002563206,
+      "taiex_return": -0.03383942358087478,
+      "rediscount_rate": 0.7260333097134701,
+      "mortgage_rate": 0.7580284137849824,
+      "m2_level": 0.4210064200958842,
+      "m2_log": 0.3958152868814264,
+      "m2_yoy": -0.49206199635357445,
+      "usd_twd": 1,
+      "fed_funds_rate": 0.8125013421471301,
+      "fed_assets_bn": -0.20919110850694184,
+      "cpi_index": 0.5389293787252672,
+      "cpi_inflation": 0.07653832081517162,
+      "price_to_income_ratio": 0.037674075487386896
+    },
+    "fed_funds_rate": {
+      "housing_unit_price": 0.7106343531931257,
+      "housing_index": 0.7107049986360308,
+      "taiex_close": 0.480013132051962,
+      "taiex_return": 0.08075150155502045,
+      "rediscount_rate": 0.9307187573144396,
+      "mortgage_rate": 0.9299982581411715,
+      "m2_level": 0.6899957491553513,
+      "m2_log": 0.6724636054656885,
+      "m2_yoy": -0.28538055000691154,
+      "usd_twd": 0.8125013421471301,
+      "fed_funds_rate": 1,
+      "fed_assets_bn": 0.08343487350696072,
+      "cpi_index": 0.777875929268873,
+      "cpi_inflation": 0.35301100048990236,
+      "price_to_income_ratio": 0.17267583430501368
+    },
+    "fed_assets_bn": {
+      "housing_unit_price": 0.4957435544669894,
+      "housing_index": 0.49591501937732524,
+      "taiex_close": 0.4314267226968971,
+      "taiex_return": 0.04424598808237787,
+      "rediscount_rate": 0.23082847177494284,
+      "mortgage_rate": 0.08983601247004663,
+      "m2_level": 0.5847642557238978,
+      "m2_log": 0.6254166415097802,
+      "m2_yoy": 0.8344862398744086,
+      "usd_twd": -0.20919110850694184,
+      "fed_funds_rate": 0.08343487350696072,
+      "fed_assets_bn": 1,
+      "cpi_index": 0.444461199346878,
+      "cpi_inflation": 0.5670202052372391,
+      "price_to_income_ratio": 0.29907030703209636
+    },
+    "cpi_index": {
+      "housing_unit_price": 0.9730057731917549,
+      "housing_index": 0.9729759411219205,
+      "taiex_close": 0.8793217447560361,
+      "taiex_return": 0.11935879784567349,
+      "rediscount_rate": 0.9348597972667022,
+      "mortgage_rate": 0.8957658003831502,
+      "m2_level": 0.9794853754422889,
+      "m2_log": 0.9696998703410536,
+      "m2_yoy": 0.0838917626237862,
+      "usd_twd": 0.5389293787252672,
+      "fed_funds_rate": 0.777875929268873,
+      "fed_assets_bn": 0.444461199346878,
+      "cpi_index": 1,
+      "cpi_inflation": 0.48856406668417474,
+      "price_to_income_ratio": 0.10080829473438845
+    },
+    "cpi_inflation": {
+      "housing_unit_price": 0.4623847940160396,
+      "housing_index": 0.46268796624968056,
+      "taiex_close": 0.35037794357162494,
+      "taiex_return": -0.16330162405800763,
+      "rediscount_rate": 0.3771172191319012,
+      "mortgage_rate": 0.31594091238179267,
+      "m2_level": 0.48536045264966204,
+      "m2_log": 0.5036106963024498,
+      "m2_yoy": 0.41016872526626075,
+      "usd_twd": 0.07653832081517162,
+      "fed_funds_rate": 0.35301100048990236,
+      "fed_assets_bn": 0.5670202052372391,
+      "cpi_index": 0.48856406668417474,
+      "cpi_inflation": 1,
+      "price_to_income_ratio": 0.258352940228555
+    },
+    "price_to_income_ratio": {
+      "housing_unit_price": 0.1961963419841831,
+      "housing_index": 0.1964670822903262,
+      "taiex_close": -0.14025105262031148,
+      "taiex_return": -0.18697302432986587,
+      "rediscount_rate": 0.11449121439443248,
+      "mortgage_rate": 0.03604558091750097,
+      "m2_level": 0.12273143334157095,
+      "m2_log": 0.14622833873420651,
+      "m2_yoy": 0.2168965160884608,
+      "usd_twd": 0.037674075487386896,
+      "fed_funds_rate": 0.17267583430501368,
+      "fed_assets_bn": 0.29907030703209636,
+      "cpi_index": 0.10080829473438845,
+      "cpi_inflation": 0.258352940228555,
+      "price_to_income_ratio": 1
     }
   },
   "timeSeries": [
@@ -104,8 +311,17 @@
       "taiexReturn": 0,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.635,
+      "m2Level": 42880997,
+      "m2Log": 17.573939325389357,
+      "m2Yoy": 3.42,
+      "usdTwd": 29.440954545454545,
+      "fedFundsRate": 1.41,
+      "fedAssetsBn": 4419.225,
+      "cpiIndex": 97.02,
+      "cpiInflation": 0.89,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.62
     },
     {
       "month": "2018-02",
@@ -115,8 +331,17 @@
       "taiexReturn": -0.025965908937398988,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.633,
+      "m2Level": 43402788,
+      "m2Log": 17.586034236638692,
+      "m2Yoy": 3.78,
+      "usdTwd": 29.307933333333335,
+      "fedFundsRate": 1.42,
+      "fedAssetsBn": 4393.401,
+      "cpiIndex": 97.93,
+      "cpiInflation": 2.2,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.62
     },
     {
       "month": "2018-03",
@@ -126,8 +351,17 @@
       "taiexReturn": 0.009617705009583536,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.628,
+      "m2Level": 43430627,
+      "m2Log": 17.58667544143189,
+      "m2Yoy": 3.6,
+      "usdTwd": 29.21591304347826,
+      "fedFundsRate": 1.51,
+      "fedAssetsBn": 4392.198,
+      "cpiIndex": 96.98,
+      "cpiInflation": 1.59,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.62
     },
     {
       "month": "2018-04",
@@ -137,8 +371,17 @@
       "taiexReturn": -0.023958078628214374,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.629,
+      "m2Level": 43475201,
+      "m2Log": 17.587701241540685,
+      "m2Yoy": 3.59,
+      "usdTwd": 29.394555555555556,
+      "fedFundsRate": 1.69,
+      "fedAssetsBn": 4372.886,
+      "cpiIndex": 97.61,
+      "cpiInflation": 2.01,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.08
     },
     {
       "month": "2018-05",
@@ -148,8 +391,17 @@
       "taiexReturn": 0.02036802816319943,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.627,
+      "m2Level": 43738681,
+      "m2Log": 17.593743417294103,
+      "m2Yoy": 3.73,
+      "usdTwd": 29.87863636363636,
+      "fedFundsRate": 1.7,
+      "fedAssetsBn": 4327.519,
+      "cpiIndex": 97.48,
+      "cpiInflation": 1.75,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.08
     },
     {
       "month": "2018-06",
@@ -159,8 +411,17 @@
       "taiexReturn": -0.00349886344409536,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.624,
+      "m2Level": 43706868,
+      "m2Log": 17.593015810188486,
+      "m2Yoy": 4.1,
+      "usdTwd": 30.081200000000003,
+      "fedFundsRate": 1.82,
+      "fedAssetsBn": 4305.491,
+      "cpiIndex": 97.88,
+      "cpiInflation": 1.4,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.08
     },
     {
       "month": "2018-07",
@@ -170,8 +431,17 @@
       "taiexReturn": 0.0203563561937859,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.62,
+      "m2Level": 43723364,
+      "m2Log": 17.59339316250286,
+      "m2Yoy": 3.68,
+      "usdTwd": 30.56472727272727,
+      "fedFundsRate": 1.91,
+      "fedAssetsBn": 4277.681,
+      "cpiIndex": 98.22,
+      "cpiInflation": 1.75,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.63
     },
     {
       "month": "2018-08",
@@ -181,8 +451,17 @@
       "taiexReturn": 0.0005815052394255389,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.626,
+      "m2Level": 43843785,
+      "m2Log": 17.59614353355607,
+      "m2Yoy": 3.42,
+      "usdTwd": 30.72895652173914,
+      "fedFundsRate": 1.91,
+      "fedAssetsBn": 4218.914,
+      "cpiIndex": 98.16,
+      "cpiInflation": 1.54,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.63
     },
     {
       "month": "2018-09",
@@ -192,8 +471,17 @@
       "taiexReturn": -0.005206101985368717,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.62,
+      "m2Level": 43837395,
+      "m2Log": 17.59599777821812,
+      "m2Yoy": 3.34,
+      "usdTwd": 30.754894736842104,
+      "fedFundsRate": 1.95,
+      "fedAssetsBn": 4192.909,
+      "cpiIndex": 98.32,
+      "cpiInflation": 1.72,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.63
     },
     {
       "month": "2018-10",
@@ -203,8 +491,17 @@
       "taiexReturn": -0.1094105760861468,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.627,
+      "m2Level": 43821000,
+      "m2Log": 17.59562371250106,
+      "m2Yoy": 3.39,
+      "usdTwd": 30.9045,
+      "fedFundsRate": 2.19,
+      "fedAssetsBn": 4139.731,
+      "cpiIndex": 98.39,
+      "cpiInflation": 1.16,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.8
     },
     {
       "month": "2018-11",
@@ -214,8 +511,17 @@
       "taiexReturn": 0.008763401423976367,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.626,
+      "m2Level": 43948736,
+      "m2Log": 17.59853442172739,
+      "m2Yoy": 3.09,
+      "usdTwd": 30.856818181818184,
+      "fedFundsRate": 2.2,
+      "fedAssetsBn": 4097.17,
+      "cpiIndex": 97.78,
+      "cpiInflation": 0.29,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.8
     },
     {
       "month": "2018-12",
@@ -225,8 +531,17 @@
       "taiexReturn": -0.016243882755210166,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.617,
+      "m2Level": 44031625,
+      "m2Log": 17.600418683705456,
+      "m2Yoy": 3.07,
+      "usdTwd": 30.82609523809524,
+      "fedFundsRate": 2.27,
+      "fedAssetsBn": 4075.636,
+      "cpiIndex": 97.29,
+      "cpiInflation": -0.06,
+      "priceToIncomeRatio": 8.57,
+      "nationalHousingIndex": 100.8
     },
     {
       "month": "2019-01",
@@ -236,8 +551,17 @@
       "taiexReturn": 0.021059048605949617,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.629,
+      "m2Level": 44225822,
+      "m2Log": 17.604819384609577,
+      "m2Yoy": 3.14,
+      "usdTwd": 30.829565217391306,
+      "fedFundsRate": 2.4,
+      "fedAssetsBn": 4039.678,
+      "cpiIndex": 97.19,
+      "cpiInflation": 0.18,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 102.39
     },
     {
       "month": "2019-02",
@@ -247,8 +571,17 @@
       "taiexReturn": 0.046002621759800875,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.638,
+      "m2Level": 44668293,
+      "m2Log": 17.614774479031993,
+      "m2Yoy": 2.92,
+      "usdTwd": 30.81586666666666,
+      "fedFundsRate": 2.4,
+      "fedAssetsBn": 3974.59,
+      "cpiIndex": 98.14,
+      "cpiInflation": 0.21,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 102.39
     },
     {
       "month": "2019-03",
@@ -258,8 +591,17 @@
       "taiexReturn": 0.024243515121997312,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.627,
+      "m2Level": 44776042,
+      "m2Log": 17.617183777555393,
+      "m2Yoy": 3.1,
+      "usdTwd": 30.857049999999997,
+      "fedFundsRate": 2.41,
+      "fedAssetsBn": 3955.617,
+      "cpiIndex": 97.52,
+      "cpiInflation": 0.56,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 102.39
     },
     {
       "month": "2019-04",
@@ -269,8 +611,17 @@
       "taiexReturn": 0.03070094652402384,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.622,
+      "m2Level": 45087414,
+      "m2Log": 17.624113696789838,
+      "m2Yoy": 3.71,
+      "usdTwd": 30.860600000000005,
+      "fedFundsRate": 2.42,
+      "fedAssetsBn": 3928.273,
+      "cpiIndex": 98.25,
+      "cpiInflation": 0.66,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 102.61
     },
     {
       "month": "2019-05",
@@ -280,8 +631,17 @@
       "taiexReturn": -0.04278369361754892,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.622,
+      "m2Level": 45227641,
+      "m2Log": 17.627218984444966,
+      "m2Yoy": 3.4,
+      "usdTwd": 31.247409090909095,
+      "fedFundsRate": 2.39,
+      "fedAssetsBn": 3851.444,
+      "cpiIndex": 98.39,
+      "cpiInflation": 0.93,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 102.61
     },
     {
       "month": "2019-06",
@@ -291,8 +651,17 @@
       "taiexReturn": 0.022130801667668412,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.621,
+      "m2Level": 45038184,
+      "m2Log": 17.623021221267038,
+      "m2Yoy": 3.05,
+      "usdTwd": 31.335789473684216,
+      "fedFundsRate": 2.38,
+      "fedAssetsBn": 3826.817,
+      "cpiIndex": 98.71,
+      "cpiInflation": 0.85,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 102.61
     },
     {
       "month": "2019-07",
@@ -302,8 +671,17 @@
       "taiexReturn": 0.008664753798168414,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.619,
+      "m2Level": 45202779,
+      "m2Log": 17.626669125213386,
+      "m2Yoy": 3.38,
+      "usdTwd": 31.088652173913047,
+      "fedFundsRate": 2.4,
+      "fedAssetsBn": 3779.102,
+      "cpiIndex": 98.6,
+      "cpiInflation": 0.39,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 103.57
     },
     {
       "month": "2019-08",
@@ -313,8 +691,17 @@
       "taiexReturn": -0.01900994197052611,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.624,
+      "m2Level": 45313461,
+      "m2Log": 17.629114698630136,
+      "m2Yoy": 3.35,
+      "usdTwd": 31.412952380952373,
+      "fedFundsRate": 2.13,
+      "fedAssetsBn": 3759.946,
+      "cpiIndex": 98.58,
+      "cpiInflation": 0.43,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 103.57
     },
     {
       "month": "2019-09",
@@ -324,8 +711,17 @@
       "taiexReturn": 0.019931154967249263,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 2,
-      "transactionMedian": 56.17
+      "mortgageRate": 1.615,
+      "m2Level": 45327701,
+      "m2Log": 17.6294289046664,
+      "m2Yoy": 3.4,
+      "usdTwd": 31.142105263157898,
+      "fedFundsRate": 2.04,
+      "fedAssetsBn": 3857.715,
+      "cpiIndex": 98.73,
+      "cpiInflation": 0.42,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 103.57
     },
     {
       "month": "2019-10",
@@ -335,8 +731,17 @@
       "taiexReturn": 0.048850012188725686,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.615,
+      "m2Level": 45483450,
+      "m2Log": 17.63285908148936,
+      "m2Yoy": 3.79,
+      "usdTwd": 30.73172727272727,
+      "fedFundsRate": 1.83,
+      "fedAssetsBn": 4019.823,
+      "cpiIndex": 98.75,
+      "cpiInflation": 0.37,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 104.14
     },
     {
       "month": "2019-11",
@@ -346,8 +751,17 @@
       "taiexReturn": -0.12558204232698952,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.617,
+      "m2Level": 45766777,
+      "m2Log": 17.6390689928465,
+      "m2Yoy": 4.14,
+      "usdTwd": 30.47885714285714,
+      "fedFundsRate": 1.55,
+      "fedAssetsBn": 4052.875,
+      "cpiIndex": 98.35,
+      "cpiInflation": 0.58,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 104.14
     },
     {
       "month": "2019-12",
@@ -357,8 +771,17 @@
       "taiexReturn": 0.2078962894648347,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 1,
-      "transactionMedian": 57.33
+      "mortgageRate": 1.608,
+      "m2Level": 45847301,
+      "m2Log": 17.640826889067128,
+      "m2Yoy": 4.12,
+      "usdTwd": 30.324954545454542,
+      "fedFundsRate": 1.55,
+      "fedAssetsBn": 4165.591,
+      "cpiIndex": 98.41,
+      "cpiInflation": 1.15,
+      "priceToIncomeRatio": 8.58,
+      "nationalHousingIndex": 104.14
     },
     {
       "month": "2020-01",
@@ -368,8 +791,17 @@
       "taiexReturn": -0.04184664011589421,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 1,
-      "transactionMedian": 54.52
+      "mortgageRate": 1.617,
+      "m2Level": 46259484,
+      "m2Log": 17.64977706036035,
+      "m2Yoy": 4.6,
+      "usdTwd": 30.04558823529411,
+      "fedFundsRate": 1.55,
+      "fedAssetsBn": 4151.63,
+      "cpiIndex": 99,
+      "cpiInflation": 1.86,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 104.69
     },
     {
       "month": "2020-02",
@@ -379,8 +811,17 @@
       "taiexReturn": -0.017653608929021954,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.611,
+      "m2Level": 46610991,
+      "m2Log": 17.65734692965476,
+      "m2Yoy": 4.35,
+      "usdTwd": 30.190850000000005,
+      "fedFundsRate": 1.58,
+      "fedAssetsBn": 4158.637,
+      "cpiIndex": 97.94,
+      "cpiInflation": -0.2,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 104.69
     },
     {
       "month": "2020-03",
@@ -390,8 +831,17 @@
       "taiexReturn": -0.14028393125502012,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.593,
+      "m2Level": 46753570,
+      "m2Log": 17.66040117441978,
+      "m2Yoy": 4.42,
+      "usdTwd": 30.20527272727273,
+      "fedFundsRate": 0.65,
+      "fedAssetsBn": 5254.278,
+      "cpiIndex": 97.5,
+      "cpiInflation": -0.02,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 104.69
     },
     {
       "month": "2020-04",
@@ -401,8 +851,17 @@
       "taiexReturn": 0.13226947505474831,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.381,
+      "m2Level": 46986865,
+      "m2Log": 17.665378652530745,
+      "m2Yoy": 4.21,
+      "usdTwd": 30.089500000000005,
+      "fedFundsRate": 0.05,
+      "fedAssetsBn": 6655.929,
+      "cpiIndex": 97.3,
+      "cpiInflation": -0.97,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 105.39
     },
     {
       "month": "2020-05",
@@ -412,8 +871,17 @@
       "taiexReturn": -0.004546885319873979,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 4,
-      "transactionMedian": 54.98
+      "mortgageRate": 1.349,
+      "m2Level": 47116441,
+      "m2Log": 17.66813256389476,
+      "m2Yoy": 4.18,
+      "usdTwd": 29.957349999999998,
+      "fedFundsRate": 0.05,
+      "fedAssetsBn": 7097.316,
+      "cpiIndex": 97.2,
+      "cpiInflation": -1.21,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 105.39
     },
     {
       "month": "2020-06",
@@ -423,8 +891,17 @@
       "taiexReturn": 0.06206087280756267,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 1,
-      "transactionMedian": 56.68
+      "mortgageRate": 1.359,
+      "m2Level": 47477250,
+      "m2Log": 17.67576120690452,
+      "m2Yoy": 5.42,
+      "usdTwd": 29.75171428571429,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 7082.302,
+      "cpiIndex": 97.98,
+      "cpiInflation": -0.74,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 105.39
     },
     {
       "month": "2020-07",
@@ -434,8 +911,17 @@
       "taiexReturn": 0.08979764637852755,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 1,
-      "transactionMedian": 53.94
+      "mortgageRate": 1.359,
+      "m2Level": 47865359,
+      "m2Log": 17.683902606595616,
+      "m2Yoy": 5.89,
+      "usdTwd": 29.563391304347814,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 6949.032,
+      "cpiIndex": 98.1,
+      "cpiInflation": -0.51,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 106.89
     },
     {
       "month": "2020-08",
@@ -445,8 +931,17 @@
       "taiexReturn": -0.005791642978965206,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 1,
-      "transactionMedian": 52.25
+      "mortgageRate": 1.359,
+      "m2Level": 48343627,
+      "m2Log": 17.693844961455127,
+      "m2Yoy": 6.69,
+      "usdTwd": 29.521142857142856,
+      "fedFundsRate": 0.1,
+      "fedAssetsBn": 6990.418,
+      "cpiIndex": 98.25,
+      "cpiInflation": -0.33,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 106.89
     },
     {
       "month": "2020-09",
@@ -456,8 +951,17 @@
       "taiexReturn": -0.0060231347461968355,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.359,
+      "m2Level": 48567328,
+      "m2Log": 17.69846159942589,
+      "m2Yoy": 7.15,
+      "usdTwd": 29.359869565217387,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 7056.129,
+      "cpiIndex": 98.16,
+      "cpiInflation": -0.58,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 106.89
     },
     {
       "month": "2020-10",
@@ -467,8 +971,17 @@
       "taiexReturn": 0.0024553337791765294,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 2,
-      "transactionMedian": 54.73
+      "mortgageRate": 1.367,
+      "m2Level": 48691517,
+      "m2Log": 17.701015383968464,
+      "m2Yoy": 7.05,
+      "usdTwd": 28.933894736842106,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 7146.306,
+      "cpiIndex": 98.49,
+      "cpiInflation": -0.26,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 108.17
     },
     {
       "month": "2020-11",
@@ -478,8 +991,17 @@
       "taiexReturn": 0.09377635230672844,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.361,
+      "m2Level": 49244895,
+      "m2Log": 17.712316265387503,
+      "m2Yoy": 7.6,
+      "usdTwd": 28.843809523809526,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 7216.48,
+      "cpiIndex": 98.44,
+      "cpiInflation": 0.09,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 108.17
     },
     {
       "month": "2020-12",
@@ -489,8 +1011,17 @@
       "taiexReturn": 0.07357342367387637,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.356,
+      "m2Level": 49721350,
+      "m2Log": 17.721944976289663,
+      "m2Yoy": 8.45,
+      "usdTwd": 28.539130434782606,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 7363.351,
+      "cpiIndex": 98.45,
+      "cpiInflation": 0.04,
+      "priceToIncomeRatio": 9.2,
+      "nationalHousingIndex": 108.17
     },
     {
       "month": "2021-01",
@@ -500,8 +1031,17 @@
       "taiexReturn": 0.02754313074536409,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 3,
-      "transactionMedian": 74.72
+      "mortgageRate": 1.362,
+      "m2Level": 50346758,
+      "m2Log": 17.734444785780692,
+      "m2Yoy": 8.84,
+      "usdTwd": 28.431100000000004,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 7404.926,
+      "cpiIndex": 98.81,
+      "cpiInflation": -0.19,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 110.61
     },
     {
       "month": "2021-02",
@@ -511,8 +1051,17 @@
       "taiexReturn": 0.053869289240344516,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.367,
+      "m2Level": 50862321,
+      "m2Log": 17.74463295199368,
+      "m2Yoy": 9.12,
+      "usdTwd": 28.3495625,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 7590.111,
+      "cpiIndex": 99.29,
+      "cpiInflation": 1.38,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 110.61
     },
     {
       "month": "2021-03",
@@ -522,8 +1071,17 @@
       "taiexReturn": 0.029919517607090586,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 3,
-      "transactionMedian": 88.98
+      "mortgageRate": 1.357,
+      "m2Level": 50920293,
+      "m2Log": 17.74577208576104,
+      "m2Yoy": 8.91,
+      "usdTwd": 28.384954545454548,
+      "fedFundsRate": 0.07,
+      "fedAssetsBn": 7688.988,
+      "cpiIndex": 98.69,
+      "cpiInflation": 1.22,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 110.61
     },
     {
       "month": "2021-04",
@@ -533,8 +1091,17 @@
       "taiexReturn": 0.06910845450069464,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 6,
-      "transactionMedian": 86.7
+      "mortgageRate": 1.357,
+      "m2Level": 51137274,
+      "m2Log": 17.75002422175268,
+      "m2Yoy": 8.83,
+      "usdTwd": 28.257473684210527,
+      "fedFundsRate": 0.07,
+      "fedAssetsBn": 7780.962,
+      "cpiIndex": 99.35,
+      "cpiInflation": 2.11,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 112.42
     },
     {
       "month": "2021-05",
@@ -544,8 +1111,17 @@
       "taiexReturn": -0.02836224985284622,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 4,
-      "transactionMedian": 75.16
+      "mortgageRate": 1.35,
+      "m2Level": 51455791,
+      "m2Log": 17.756233569789888,
+      "m2Yoy": 9.21,
+      "usdTwd": 27.921,
+      "fedFundsRate": 0.06,
+      "fedAssetsBn": 7903.541,
+      "cpiIndex": 99.58,
+      "cpiInflation": 2.45,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 112.42
     },
     {
       "month": "2021-06",
@@ -555,8 +1131,17 @@
       "taiexReturn": 0.04025150526439742,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.353,
+      "m2Level": 51857579,
+      "m2Log": 17.764011653606765,
+      "m2Yoy": 9.23,
+      "usdTwd": 27.79685714285714,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8078.544,
+      "cpiIndex": 99.77,
+      "cpiInflation": 1.83,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 112.42
     },
     {
       "month": "2021-07",
@@ -566,8 +1151,17 @@
       "taiexReturn": -0.0286137334656494,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 3,
-      "transactionMedian": 71.87
+      "mortgageRate": 1.349,
+      "m2Level": 52031665,
+      "m2Log": 17.76736303352326,
+      "m2Yoy": 8.7,
+      "usdTwd": 28.001272727272728,
+      "fedFundsRate": 0.1,
+      "fedAssetsBn": 8221.473,
+      "cpiIndex": 99.97,
+      "cpiInflation": 1.91,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 114.83
     },
     {
       "month": "2021-08",
@@ -577,8 +1171,17 @@
       "taiexReturn": 0.05632323925737257,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 3,
-      "transactionMedian": 139.46
+      "mortgageRate": 1.349,
+      "m2Level": 52425303,
+      "m2Log": 17.77489991442082,
+      "m2Yoy": 8.44,
+      "usdTwd": 27.877863636363635,
+      "fedFundsRate": 0.09,
+      "fedAssetsBn": 8332.743,
+      "cpiIndex": 100.55,
+      "cpiInflation": 2.34,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 114.83
     },
     {
       "month": "2021-09",
@@ -588,8 +1191,17 @@
       "taiexReturn": -0.07048033793589492,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 1,
-      "transactionMedian": 86.02
+      "mortgageRate": 1.346,
+      "m2Level": 52786682,
+      "m2Log": 17.781769482011445,
+      "m2Yoy": 8.69,
+      "usdTwd": 27.737238095238094,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8447.981,
+      "cpiIndex": 100.71,
+      "cpiInflation": 2.6,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 114.83
     },
     {
       "month": "2021-10",
@@ -599,8 +1211,17 @@
       "taiexReturn": 0.0031083976930303403,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.351,
+      "m2Level": 52804318,
+      "m2Log": 17.782103525635694,
+      "m2Yoy": 8.45,
+      "usdTwd": 27.946199999999997,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8556.181,
+      "cpiIndex": 101,
+      "cpiInflation": 2.55,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 117.5
     },
     {
       "month": "2021-11",
@@ -610,8 +1231,17 @@
       "taiexReturn": 0.025922138807505,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.351,
+      "m2Level": 53311701,
+      "m2Log": 17.791666395999528,
+      "m2Yoy": 8.26,
+      "usdTwd": 27.818181818181817,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8681.771,
+      "cpiIndex": 101.24,
+      "cpiInflation": 2.84,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 117.5
     },
     {
       "month": "2021-12",
@@ -621,8 +1251,17 @@
       "taiexReturn": 0.04539194939567689,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.355,
+      "m2Level": 53709010,
+      "m2Log": 17.799091329390038,
+      "m2Yoy": 8.02,
+      "usdTwd": 27.761454545454544,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8757.46,
+      "cpiIndex": 101.04,
+      "cpiInflation": 2.63,
+      "priceToIncomeRatio": 9.46,
+      "nationalHousingIndex": 117.5
     },
     {
       "month": "2022-01",
@@ -632,8 +1271,17 @@
       "taiexReturn": -0.029883351519635646,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.359,
+      "m2Level": 54306670,
+      "m2Log": 17.81015761345619,
+      "m2Yoy": 7.87,
+      "usdTwd": 27.67809523809524,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8860.485,
+      "cpiIndex": 101.61,
+      "cpiInflation": 2.83,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 121.01
     },
     {
       "month": "2022-02",
@@ -643,8 +1291,17 @@
       "taiexReturn": -0.0012571855338795752,
       "rediscountRate": 1.25,
       "securedRate": 1.5,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.367,
+      "m2Level": 54764160,
+      "m2Log": 17.81854652335886,
+      "m2Yoy": 7.67,
+      "usdTwd": 27.8806,
+      "fedFundsRate": 0.08,
+      "fedAssetsBn": 8928.129,
+      "cpiIndex": 101.6,
+      "cpiInflation": 2.33,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 121.01
     },
     {
       "month": "2022-03",
@@ -654,8 +1311,17 @@
       "taiexReturn": 0.0023390878633687663,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 1,
-      "transactionMedian": 78.19
+      "mortgageRate": 1.378,
+      "m2Level": 55049908,
+      "m2Log": 17.823750749923573,
+      "m2Yoy": 8.11,
+      "usdTwd": 28.441826086956524,
+      "fedFundsRate": 0.2,
+      "fedAssetsBn": 8937.142,
+      "cpiIndex": 101.92,
+      "cpiInflation": 3.27,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 121.01
     },
     {
       "month": "2022-04",
@@ -665,8 +1331,17 @@
       "taiexReturn": -0.06224273700975562,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.561,
+      "m2Level": 55291270,
+      "m2Log": 17.828125587845935,
+      "m2Yoy": 8.12,
+      "usdTwd": 29.148789473684218,
+      "fedFundsRate": 0.33,
+      "fedAssetsBn": 8939.199,
+      "cpiIndex": 102.7,
+      "cpiInflation": 3.37,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 123.97
     },
     {
       "month": "2022-05",
@@ -676,8 +1351,17 @@
       "taiexReturn": 0.0129934704179921,
       "rediscountRate": 1.375,
       "securedRate": 1.75,
-      "transactionCount": 2,
-      "transactionMedian": 116.6
+      "mortgageRate": 1.601,
+      "m2Level": 55543738,
+      "m2Log": 17.83268134042299,
+      "m2Yoy": 7.94,
+      "usdTwd": 29.597428571428573,
+      "fedFundsRate": 0.77,
+      "fedAssetsBn": 8914.281,
+      "cpiIndex": 102.96,
+      "cpiInflation": 3.39,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 123.97
     },
     {
       "month": "2022-06",
@@ -687,8 +1371,17 @@
       "taiexReturn": -0.11792403156397314,
       "rediscountRate": 1.5,
       "securedRate": 1.875,
-      "transactionCount": 6,
-      "transactionMedian": 91.02
+      "mortgageRate": 1.614,
+      "m2Level": 55826245,
+      "m2Log": 17.83775465727791,
+      "m2Yoy": 7.65,
+      "usdTwd": 29.632428571428573,
+      "fedFundsRate": 1.21,
+      "fedAssetsBn": 8913.553,
+      "cpiIndex": 103.35,
+      "cpiInflation": 3.59,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 123.97
     },
     {
       "month": "2022-07",
@@ -698,8 +1391,17 @@
       "taiexReturn": 0.011759286052019034,
       "rediscountRate": 1.5,
       "securedRate": 1.875,
-      "transactionCount": 5,
-      "transactionMedian": 90.86
+      "mortgageRate": 1.703,
+      "m2Level": 55666829,
+      "m2Log": 17.834894997876333,
+      "m2Yoy": 6.99,
+      "usdTwd": 29.86614285714286,
+      "fedFundsRate": 1.68,
+      "fedAssetsBn": 8890.004,
+      "cpiIndex": 103.32,
+      "cpiInflation": 3.35,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 126.33
     },
     {
       "month": "2022-08",
@@ -709,8 +1411,17 @@
       "taiexReturn": 0.006357970329471849,
       "rediscountRate": 1.5,
       "securedRate": 1.875,
-      "transactionCount": 1,
-      "transactionMedian": 83.53
+      "mortgageRate": 1.729,
+      "m2Level": 56057165,
+      "m2Log": 17.841882531605187,
+      "m2Yoy": 6.93,
+      "usdTwd": 30.089652173913038,
+      "fedFundsRate": 2.33,
+      "fedAssetsBn": 8826.093,
+      "cpiIndex": 103.24,
+      "cpiInflation": 2.68,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 126.33
     },
     {
       "month": "2022-09",
@@ -720,8 +1431,17 @@
       "taiexReturn": -0.11068640596100547,
       "rediscountRate": 1.625,
       "securedRate": 2,
-      "transactionCount": 3,
-      "transactionMedian": 113.25
+      "mortgageRate": 1.731,
+      "m2Level": 56391120,
+      "m2Log": 17.847822257263726,
+      "m2Yoy": 6.83,
+      "usdTwd": 31.24495238095238,
+      "fedFundsRate": 2.56,
+      "fedAssetsBn": 8795.567,
+      "cpiIndex": 103.49,
+      "cpiInflation": 2.76,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 126.33
     },
     {
       "month": "2022-10",
@@ -731,8 +1451,17 @@
       "taiexReturn": -0.03537019407683517,
       "rediscountRate": 1.625,
       "securedRate": 2,
-      "transactionCount": 1,
-      "transactionMedian": 92.03
+      "mortgageRate": 1.827,
+      "m2Level": 56668203,
+      "m2Log": 17.852723817743616,
+      "m2Yoy": 7.32,
+      "usdTwd": 31.969749999999998,
+      "fedFundsRate": 3.08,
+      "fedAssetsBn": 8723.09,
+      "cpiIndex": 103.77,
+      "cpiInflation": 2.74,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 127.51
     },
     {
       "month": "2022-11",
@@ -742,8 +1471,17 @@
       "taiexReturn": 0.14902218189540334,
       "rediscountRate": 1.625,
       "securedRate": 2,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.851,
+      "m2Level": 57243298,
+      "m2Log": 17.862821128043738,
+      "m2Yoy": 7.37,
+      "usdTwd": 31.46563636363637,
+      "fedFundsRate": 3.78,
+      "fedAssetsBn": 8584.576,
+      "cpiIndex": 103.62,
+      "cpiInflation": 2.35,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 127.51
     },
     {
       "month": "2022-12",
@@ -753,8 +1491,17 @@
       "taiexReturn": -0.049857690588761,
       "rediscountRate": 1.75,
       "securedRate": 2.125,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.864,
+      "m2Level": 57502037,
+      "m2Log": 17.867330931227045,
+      "m2Yoy": 7.06,
+      "usdTwd": 30.671363636363637,
+      "fedFundsRate": 4.1,
+      "fedAssetsBn": 8551.169,
+      "cpiIndex": 103.78,
+      "cpiInflation": 2.71,
+      "priceToIncomeRatio": 9.61,
+      "nationalHousingIndex": 127.51
     },
     {
       "month": "2023-01",
@@ -764,8 +1511,17 @@
       "taiexReturn": 0.07975206699255678,
       "rediscountRate": 1.75,
       "securedRate": 2.125,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.953,
+      "m2Level": 57929739,
+      "m2Log": 17.87474143762506,
+      "m2Yoy": 6.67,
+      "usdTwd": 30.4540625,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 8470.557,
+      "cpiIndex": 104.71,
+      "cpiInflation": 3.05,
+      "priceToIncomeRatio": 9.72,
+      "nationalHousingIndex": 128.85
     },
     {
       "month": "2023-02",
@@ -775,8 +1531,17 @@
       "taiexReturn": 0.01562966747897179,
       "rediscountRate": 1.75,
       "securedRate": 2.125,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 1.98,
+      "m2Level": 58485714,
+      "m2Log": 17.884293077250952,
+      "m2Yoy": 6.8,
+      "usdTwd": 30.1803,
+      "fedFundsRate": 4.57,
+      "fedAssetsBn": 8382.19,
+      "cpiIndex": 104.06,
+      "cpiInflation": 2.42,
+      "priceToIncomeRatio": 9.72,
+      "nationalHousingIndex": 128.85
     },
     {
       "month": "2023-03",
@@ -786,8 +1551,17 @@
       "taiexReturn": 0.023495545282798503,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 2,
-      "transactionMedian": 111.75
+      "mortgageRate": 1.985,
+      "m2Level": 58669994,
+      "m2Log": 17.88743897863512,
+      "m2Yoy": 6.58,
+      "usdTwd": 30.55970833333333,
+      "fedFundsRate": 4.65,
+      "fedAssetsBn": 8705.942,
+      "cpiIndex": 104.32,
+      "cpiInflation": 2.35,
+      "priceToIncomeRatio": 9.72,
+      "nationalHousingIndex": 128.85
     },
     {
       "month": "2023-04",
@@ -797,8 +1571,17 @@
       "taiexReturn": -0.018205124003816422,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.08,
+      "m2Level": 58998290,
+      "m2Log": 17.89301901839913,
+      "m2Yoy": 6.7,
+      "usdTwd": 30.569647058823534,
+      "fedFundsRate": 4.83,
+      "fedAssetsBn": 8562.768,
+      "cpiIndex": 105.11,
+      "cpiInflation": 2.35,
+      "priceToIncomeRatio": 9.67,
+      "nationalHousingIndex": 130.8
     },
     {
       "month": "2023-05",
@@ -808,8 +1591,17 @@
       "taiexReturn": 0.06417410929201657,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.101,
+      "m2Level": 59226205,
+      "m2Log": 17.896874653939754,
+      "m2Yoy": 6.63,
+      "usdTwd": 30.734227272727274,
+      "fedFundsRate": 5.06,
+      "fedAssetsBn": 8385.854,
+      "cpiIndex": 105.04,
+      "cpiInflation": 2.02,
+      "priceToIncomeRatio": 9.67,
+      "nationalHousingIndex": 130.8
     },
     {
       "month": "2023-06",
@@ -819,8 +1611,17 @@
       "taiexReturn": 0.02030163532573827,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.098,
+      "m2Level": 59137467,
+      "m2Log": 17.895375240899824,
+      "m2Yoy": 5.93,
+      "usdTwd": 30.824428571428566,
+      "fedFundsRate": 5.08,
+      "fedAssetsBn": 8340.914,
+      "cpiIndex": 105.16,
+      "cpiInflation": 1.75,
+      "priceToIncomeRatio": 9.67,
+      "nationalHousingIndex": 130.8
     },
     {
       "month": "2023-07",
@@ -830,8 +1631,17 @@
       "taiexReturn": 0.013590461788390995,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.098,
+      "m2Level": 59525729,
+      "m2Log": 17.901919197217268,
+      "m2Yoy": 6.93,
+      "usdTwd": 31.203190476190468,
+      "fedFundsRate": 5.12,
+      "fedAssetsBn": 8243.344,
+      "cpiIndex": 105.26,
+      "cpiInflation": 1.88,
+      "priceToIncomeRatio": 9.86,
+      "nationalHousingIndex": 133.18
     },
     {
       "month": "2023-08",
@@ -841,8 +1651,17 @@
       "taiexReturn": -0.029799194304254945,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.091,
+      "m2Level": 59717013,
+      "m2Log": 17.905127512639577,
+      "m2Yoy": 6.53,
+      "usdTwd": 31.82890909090909,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 8121.316,
+      "cpiIndex": 105.85,
+      "cpiInflation": 2.53,
+      "priceToIncomeRatio": 9.86,
+      "nationalHousingIndex": 133.18
     },
     {
       "month": "2023-09",
@@ -852,8 +1671,17 @@
       "taiexReturn": -0.01687876589090984,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.076,
+      "m2Level": 59764615,
+      "m2Log": 17.905924321376038,
+      "m2Yoy": 5.98,
+      "usdTwd": 32.03214285714286,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 8002.064,
+      "cpiIndex": 106.52,
+      "cpiInflation": 2.93,
+      "priceToIncomeRatio": 9.86,
+      "nationalHousingIndex": 133.18
     },
     {
       "month": "2023-10",
@@ -863,8 +1691,17 @@
       "taiexReturn": -0.021552868028964587,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.077,
+      "m2Level": 59895809,
+      "m2Log": 17.90811709402688,
+      "m2Yoy": 5.7,
+      "usdTwd": 32.30174999999999,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7907.83,
+      "cpiIndex": 106.92,
+      "cpiInflation": 3.04,
+      "priceToIncomeRatio": 9.97,
+      "nationalHousingIndex": 136.2
     },
     {
       "month": "2023-11",
@@ -874,8 +1711,17 @@
       "taiexReturn": 0.0895291436242247,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.071,
+      "m2Level": 60296879,
+      "m2Log": 17.91479090248065,
+      "m2Yoy": 5.33,
+      "usdTwd": 31.927454545454545,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7796.145,
+      "cpiIndex": 106.62,
+      "cpiInflation": 2.9,
+      "priceToIncomeRatio": 9.97,
+      "nationalHousingIndex": 136.2
     },
     {
       "month": "2023-12",
@@ -885,8 +1731,17 @@
       "taiexReturn": 0.02850546494319974,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.079,
+      "m2Level": 60548592,
+      "m2Log": 17.918956774183513,
+      "m2Yoy": 5.3,
+      "usdTwd": 31.283047619047622,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7712.781,
+      "cpiIndex": 106.58,
+      "cpiInflation": 2.7,
+      "priceToIncomeRatio": 9.97,
+      "nationalHousingIndex": 136.2
     },
     {
       "month": "2024-01",
@@ -896,8 +1751,17 @@
       "taiexReturn": -0.002300509569840961,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.073,
+      "m2Level": 61080247,
+      "m2Log": 17.927699082183413,
+      "m2Yoy": 5.44,
+      "usdTwd": 31.22186363636364,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7630.124,
+      "cpiIndex": 106.59,
+      "cpiInflation": 1.8,
+      "priceToIncomeRatio": 10.35,
+      "nationalHousingIndex": 140.82
     },
     {
       "month": "2024-02",
@@ -907,8 +1771,17 @@
       "taiexReturn": 0.060214449097685974,
       "rediscountRate": 1.875,
       "securedRate": 2.25,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.077,
+      "m2Level": 61754060,
+      "m2Log": 17.938670280298844,
+      "m2Yoy": 5.59,
+      "usdTwd": 31.437125,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7567.807,
+      "cpiIndex": 107.26,
+      "cpiInflation": 3.08,
+      "priceToIncomeRatio": 10.35,
+      "nationalHousingIndex": 140.82
     },
     {
       "month": "2024-03",
@@ -918,8 +1791,17 @@
       "taiexReturn": 0.07000032161511952,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.086,
+      "m2Level": 62279877,
+      "m2Log": 17.94714892997629,
+      "m2Yoy": 6.15,
+      "usdTwd": 31.688190476190478,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7484.739,
+      "cpiIndex": 106.56,
+      "cpiInflation": 2.15,
+      "priceToIncomeRatio": 10.35,
+      "nationalHousingIndex": 140.82
     },
     {
       "month": "2024-04",
@@ -929,8 +1811,17 @@
       "taiexReturn": 0.005033395829894273,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.176,
+      "m2Level": 62573900,
+      "m2Log": 17.951858816222288,
+      "m2Yoy": 6.06,
+      "usdTwd": 32.352900000000005,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7402.434,
+      "cpiIndex": 107.15,
+      "cpiInflation": 1.94,
+      "priceToIncomeRatio": 10.65,
+      "nationalHousingIndex": 146.48
     },
     {
       "month": "2024-05",
@@ -940,8 +1831,17 @@
       "taiexReturn": 0.038124981614582956,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 2,
-      "transactionMedian": 127.32
+      "mortgageRate": 2.187,
+      "m2Level": 62805146,
+      "m2Log": 17.95554757075647,
+      "m2Yoy": 6.04,
+      "usdTwd": 32.32531818181818,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7284.319,
+      "cpiIndex": 107.38,
+      "cpiInflation": 2.23,
+      "priceToIncomeRatio": 10.65,
+      "nationalHousingIndex": 146.48
     },
     {
       "month": "2024-06",
@@ -951,8 +1851,17 @@
       "taiexReturn": 0.08774963139138059,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.184,
+      "m2Level": 62834309,
+      "m2Log": 17.956011803915132,
+      "m2Yoy": 6.25,
+      "usdTwd": 32.386210526315786,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7231.163,
+      "cpiIndex": 107.71,
+      "cpiInflation": 2.42,
+      "priceToIncomeRatio": 10.65,
+      "nationalHousingIndex": 146.48
     },
     {
       "month": "2024-07",
@@ -962,8 +1871,17 @@
       "taiexReturn": -0.036162337591854964,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.187,
+      "m2Level": 63213962,
+      "m2Log": 17.962035752439878,
+      "m2Yoy": 6.2,
+      "usdTwd": 32.650619047619045,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7178.391,
+      "cpiIndex": 107.92,
+      "cpiInflation": 2.53,
+      "priceToIncomeRatio": 10.82,
+      "nationalHousingIndex": 149.69
     },
     {
       "month": "2024-08",
@@ -973,8 +1891,17 @@
       "taiexReturn": 0.003096487059305863,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.194,
+      "m2Level": 63178530,
+      "m2Log": 17.961475086210935,
+      "m2Yoy": 5.8,
+      "usdTwd": 32.267545454545456,
+      "fedFundsRate": 5.33,
+      "fedAssetsBn": 7123.238,
+      "cpiIndex": 108.34,
+      "cpiInflation": 2.35,
+      "priceToIncomeRatio": 10.82,
+      "nationalHousingIndex": 149.69
     },
     {
       "month": "2024-09",
@@ -984,8 +1911,17 @@
       "taiexReturn": -0.0019557133099425803,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.19,
+      "m2Level": 63108446,
+      "m2Log": 17.960365169584303,
+      "m2Yoy": 5.6,
+      "usdTwd": 31.97615,
+      "fedFundsRate": 5.13,
+      "fedAssetsBn": 7080.059,
+      "cpiIndex": 108.46,
+      "cpiInflation": 1.82,
+      "priceToIncomeRatio": 10.82,
+      "nationalHousingIndex": 149.69
     },
     {
       "month": "2024-10",
@@ -995,8 +1931,17 @@
       "taiexReturn": 0.026812253481961805,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.201,
+      "m2Level": 63385514,
+      "m2Log": 17.96474590749618,
+      "m2Yoy": 5.83,
+      "usdTwd": 32.09347368421053,
+      "fedFundsRate": 4.83,
+      "fedAssetsBn": 7013.49,
+      "cpiIndex": 108.73,
+      "cpiInflation": 1.69,
+      "priceToIncomeRatio": 10.76,
+      "nationalHousingIndex": 150.98
     },
     {
       "month": "2024-11",
@@ -1006,8 +1951,17 @@
       "taiexReturn": -0.02444870670710413,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.209,
+      "m2Level": 63593693,
+      "m2Log": 17.968024856726345,
+      "m2Yoy": 5.47,
+      "usdTwd": 32.36452380952381,
+      "fedFundsRate": 4.64,
+      "fedAssetsBn": 6905.14,
+      "cpiIndex": 108.84,
+      "cpiInflation": 2.08,
+      "priceToIncomeRatio": 10.76,
+      "nationalHousingIndex": 150.98
     },
     {
       "month": "2024-12",
@@ -1017,8 +1971,17 @@
       "taiexReturn": 0.034704098820887076,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.224,
+      "m2Level": 63884877,
+      "m2Log": 17.972593224671122,
+      "m2Yoy": 5.51,
+      "usdTwd": 32.573818181818176,
+      "fedFundsRate": 4.48,
+      "fedAssetsBn": 6885.963,
+      "cpiIndex": 108.82,
+      "cpiInflation": 2.1,
+      "priceToIncomeRatio": 10.76,
+      "nationalHousingIndex": 150.98
     },
     {
       "month": "2025-01",
@@ -1028,8 +1991,17 @@
       "taiexReturn": 0.021285342802939918,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 5,
-      "transactionMedian": 73.6
+      "mortgageRate": 2.238,
+      "m2Level": 64458727,
+      "m2Log": 17.981535685475205,
+      "m2Yoy": 5.53,
+      "usdTwd": 32.881235294117644,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6818.186,
+      "cpiIndex": 109.44,
+      "cpiInflation": 2.67,
+      "priceToIncomeRatio": 9.68,
+      "nationalHousingIndex": 149.03
     },
     {
       "month": "2025-02",
@@ -1039,8 +2011,17 @@
       "taiexReturn": -0.020073188947610246,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.245,
+      "m2Level": 64957801,
+      "m2Log": 17.98924840164373,
+      "m2Yoy": 5.19,
+      "usdTwd": 32.806149999999995,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6766.101,
+      "cpiIndex": 109,
+      "cpiInflation": 1.62,
+      "priceToIncomeRatio": 9.68,
+      "nationalHousingIndex": 149.03
     },
     {
       "month": "2025-03",
@@ -1050,8 +2031,17 @@
       "taiexReturn": -0.10225400573803696,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 2,
-      "transactionMedian": 159.31
+      "mortgageRate": 2.264,
+      "m2Level": 65010123,
+      "m2Log": 17.990053554195473,
+      "m2Yoy": 4.38,
+      "usdTwd": 32.98366666666667,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6740.253,
+      "cpiIndex": 109.05,
+      "cpiInflation": 2.34,
+      "priceToIncomeRatio": 9.68,
+      "nationalHousingIndex": 149.03
     },
     {
       "month": "2025-04",
@@ -1061,8 +2051,17 @@
       "taiexReturn": -0.02226866190888063,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.282,
+      "m2Level": 65003437,
+      "m2Log": 17.989950703385052,
+      "m2Yoy": 3.88,
+      "usdTwd": 32.64110000000001,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6709.277,
+      "cpiIndex": 109.33,
+      "cpiInflation": 2.03,
+      "priceToIncomeRatio": 9.89,
+      "nationalHousingIndex": 148.65
     },
     {
       "month": "2025-05",
@@ -1072,8 +2071,17 @@
       "taiexReturn": 0.05496754884969286,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.282,
+      "m2Level": 64893964,
+      "m2Log": 17.988265172726624,
+      "m2Yoy": 3.33,
+      "usdTwd": 30.208649999999995,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6673.244,
+      "cpiIndex": 109.03,
+      "cpiInflation": 1.54,
+      "priceToIncomeRatio": 9.89,
+      "nationalHousingIndex": 148.65
     },
     {
       "month": "2025-06",
@@ -1083,8 +2091,17 @@
       "taiexReturn": 0.04256838101305557,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 2,
-      "transactionMedian": 71.93
+      "mortgageRate": 2.283,
+      "m2Level": 65003001,
+      "m2Log": 17.989943996024913,
+      "m2Yoy": 3.45,
+      "usdTwd": 29.695428571428568,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6662.2,
+      "cpiIndex": 109.17,
+      "cpiInflation": 1.36,
+      "priceToIncomeRatio": 9.89,
+      "nationalHousingIndex": 148.65
     },
     {
       "month": "2025-07",
@@ -1094,8 +2111,17 @@
       "taiexReturn": 0.05780458500666336,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 0,
-      "transactionMedian": null
+      "mortgageRate": 2.303,
+      "m2Level": 65376836,
+      "m2Log": 17.99567856408503,
+      "m2Yoy": 3.42,
+      "usdTwd": 29.324391304347838,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6642.578,
+      "cpiIndex": 109.57,
+      "cpiInflation": 1.53,
+      "priceToIncomeRatio": 9.71,
+      "nationalHousingIndex": 145.46
     },
     {
       "month": "2025-08",
@@ -1105,8 +2131,17 @@
       "taiexReturn": 0.029333308413882545,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 1,
-      "transactionMedian": 143.59
+      "mortgageRate": 2.303,
+      "m2Level": 66184784,
+      "m2Log": 18.007961145545323,
+      "m2Yoy": 4.76,
+      "usdTwd": 30.180428571428564,
+      "fedFundsRate": 4.33,
+      "fedAssetsBn": 6603.384,
+      "cpiIndex": 110.07,
+      "cpiInflation": 1.6,
+      "priceToIncomeRatio": 9.71,
+      "nationalHousingIndex": 145.46
     },
     {
       "month": "2025-09",
@@ -1116,8 +2151,17 @@
       "taiexReturn": 0.06550709566667089,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 5,
-      "transactionMedian": 59.99
+      "mortgageRate": 2.294,
+      "m2Level": 66543743,
+      "m2Log": 18.013370078851096,
+      "m2Yoy": 5.44,
+      "usdTwd": 30.390285714285717,
+      "fedFundsRate": 4.22,
+      "fedAssetsBn": 6608.395,
+      "cpiIndex": 109.82,
+      "cpiInflation": 1.25,
+      "priceToIncomeRatio": 9.71,
+      "nationalHousingIndex": 145.46
     },
     {
       "month": "2025-10",
@@ -1127,8 +2171,17 @@
       "taiexReturn": 0.09344537333456224,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 2,
-      "transactionMedian": 77.93
+      "mortgageRate": 2.313,
+      "m2Level": 66577174,
+      "m2Log": 18.013872344031597,
+      "m2Yoy": 5.04,
+      "usdTwd": 30.63365,
+      "fedFundsRate": 4.09,
+      "fedAssetsBn": 6587.034,
+      "cpiIndex": 110.33,
+      "cpiInflation": 1.47,
+      "priceToIncomeRatio": 9.32,
+      "nationalHousingIndex": 145.52
     },
     {
       "month": "2025-11",
@@ -1138,8 +2191,17 @@
       "taiexReturn": -0.02149479250602564,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 7,
-      "transactionMedian": 88.93
+      "mortgageRate": 2.301,
+      "m2Level": 66845027,
+      "m2Log": 18.017887468318794,
+      "m2Yoy": 5.11,
+      "usdTwd": 31.170700000000004,
+      "fedFundsRate": 3.88,
+      "fedAssetsBn": 6552.419,
+      "cpiIndex": 110.16,
+      "cpiInflation": 1.21,
+      "priceToIncomeRatio": 9.32,
+      "nationalHousingIndex": 145.52
     },
     {
       "month": "2025-12",
@@ -1149,8 +2211,17 @@
       "taiexReturn": 0.048399940926241745,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 13,
-      "transactionMedian": 94.47
+      "mortgageRate": 2.298,
+      "m2Level": 67081741,
+      "m2Log": 18.021422448667156,
+      "m2Yoy": 5,
+      "usdTwd": 31.391181818181828,
+      "fedFundsRate": 3.72,
+      "fedAssetsBn": 6640.618,
+      "cpiIndex": 110.24,
+      "cpiInflation": 1.3,
+      "priceToIncomeRatio": 9.32,
+      "nationalHousingIndex": 145.52
     },
     {
       "month": "2026-01",
@@ -1160,8 +2231,17 @@
       "taiexReturn": 0.10703607286387057,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 25,
-      "transactionMedian": 79.63
+      "mortgageRate": 2.327,
+      "m2Level": 67784624,
+      "m2Log": 18.031845942530328,
+      "m2Yoy": 5.16,
+      "usdTwd": 31.540333333333333,
+      "fedFundsRate": 3.64,
+      "fedAssetsBn": 6587.568,
+      "cpiIndex": 110.22,
+      "cpiInflation": 0.71,
+      "priceToIncomeRatio": null,
+      "nationalHousingIndex": null
     },
     {
       "month": "2026-02",
@@ -1171,8 +2251,17 @@
       "taiexReturn": 0.10450243655218114,
       "rediscountRate": 2,
       "securedRate": 2.375,
-      "transactionCount": 23,
-      "transactionMedian": 79.77
+      "mortgageRate": 2.322,
+      "m2Level": 68453767,
+      "m2Log": 18.041669141055188,
+      "m2Yoy": 5.38,
+      "usdTwd": 31.510214285714284,
+      "fedFundsRate": 3.64,
+      "fedAssetsBn": 6613.797,
+      "cpiIndex": 110.91,
+      "cpiInflation": 1.75,
+      "priceToIncomeRatio": null,
+      "nationalHousingIndex": null
     }
   ],
   "sources": [
@@ -1189,13 +2278,35 @@
       "url": "https://data.gov.tw/dataset/6022"
     },
     {
-      "name": "臺北市實價周報（成交量）",
-      "url": "https://data.taipei/dataset/detail?id=a9a97996-3a55-46c8-9076-e5ebdefad6dc"
+      "name": "央行貨幣總計數 M2",
+      "url": "https://cpx.cbc.gov.tw/Data/ExportToAPIInfo"
+    },
+    {
+      "name": "五大銀行新承作放款利率",
+      "url": "https://cpx.cbc.gov.tw/Data/ExportToAPIInfo"
+    },
+    {
+      "name": "FRED（FEDFUNDS、WALCL）",
+      "url": "https://fred.stlouisfed.org/"
+    },
+    {
+      "name": "消費者物價基本分類指數（主計總處）",
+      "url": "https://data.gov.tw/dataset/6019"
+    },
+    {
+      "name": "房價負擔能力指標（內政部不動產資訊平台）",
+      "url": "https://pip.moi.gov.tw/Publicize/Info/E1050"
+    },
+    {
+      "name": "全國住宅價格指數（內政部不動產資訊平台）",
+      "url": "https://pip.moi.gov.tw/Publicize/Info/E1060"
     }
   ],
   "caveats": [
     "相關性不等於因果；總經變數與房價可能存在落後／領先關係。",
-    "實價周報成交量僅涵蓋部分臺北交易，與官方指數時間定義不同。",
-    "未納入國際事件、建照量等變數；可於 events 與營建統計擴充後重跑。"
+    "Fed 資產負債表（WALCL）作為 QE 代理指標，僅呈現於時間序列與相關矩陣。",
+    "房貸利率與 M2 來自央行統計；美國利率透過 FRED API 取得。",
+    "房價所得比為全國中位數住宅／家戶所得（季資料），與臺北市住宅單價口徑不同；圖上以季內各月填補同一值。",
+    "全國住宅價格指數（105年＝100）為內政部季指數，與臺北市月單價口徑不同；圖上以季內各月填補同一值。"
   ]
 }

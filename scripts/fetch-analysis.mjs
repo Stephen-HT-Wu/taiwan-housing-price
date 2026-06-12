@@ -1,6 +1,7 @@
 /**
  * 抓取時間序列、執行多元迴歸，輸出解釋力分析結果。
  */
+import { execFileSync } from 'node:child_process';
 import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,6 +11,49 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const HOUSING_INDEX_RID = '02c7bb70-2113-4daf-81d3-5c14b9ae26df';
 const CBC_RATE_URL = 'https://www.cbc.gov.tw/Public/Data/opendata/webF1.csv';
+const CBC_API = 'https://cpx.cbc.gov.tw/API/DataAPI/Get?FileName=';
+const CPI_XML_URL =
+  'https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/230555/pr0101a1m.xml';
+const FRED_CACHE = join(__dirname, '../public/data/fred-monthly.json');
+const AFFORDABILITY_CACHE = join(
+  __dirname,
+  '../public/data/housing-affordability.json',
+);
+const NATIONAL_INDEX_CACHE = join(
+  __dirname,
+  '../public/data/national-housing-price-index.json',
+);
+const MOI_AFFORDABILITY_URL =
+  'https://pip.moi.gov.tw/Publicize/Info/E1050';
+const MOI_HOUSING_INDEX_URL =
+  'https://pip.moi.gov.tw/Publicize/Info/E1060';
+const MOI_FETCH_HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+};
+
+const M2_METRIC_INDEX = 14;
+const MORTGAGE_RATE_INDEX = 2;
+const USD_TWD_INDEX = 1;
+
+loadEnv();
+
+function loadEnv() {
+  const envPath = join(__dirname, '../.env');
+  try {
+    for (const line of readFileSync(envPath, 'utf8').split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eq = trimmed.indexOf('=');
+      if (eq === -1) continue;
+      const key = trimmed.slice(0, eq).trim();
+      const val = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, '');
+      if (!process.env[key]) process.env[key] = val;
+    }
+  } catch {
+    /* no .env */
+  }
+}
 
 // --- matrix helpers (mirror src/lib/regression.ts) ---
 function transpose(m) {
@@ -262,30 +306,306 @@ async function fetchTaiexMonthly(startYear = 2018, endYear = 2026) {
   return byMonth;
 }
 
-function aggregateTransactionsByMonth() {
-  const path = join(__dirname, '../public/data/taipei-housing.json');
-  const data = JSON.parse(readFileSync(path, 'utf8'));
-  const byMonth = {};
-  for (const t of data.transactions) {
-    const s = t.transactionDate;
-    if (!s || s.length < 5) continue;
-    const rocYear = parseInt(s.slice(0, 3), 10) + 1911;
-    const month = `${rocYear}-${s.slice(3, 5)}`;
-    if (!byMonth[month]) byMonth[month] = [];
-    byMonth[month].push(t.pricePerPing);
-  }
-  const stats = {};
-  for (const [month, prices] of Object.entries(byMonth)) {
-    prices.sort((a, b) => a - b);
-    stats[month] = {
-      count: prices.length,
-      median: prices[Math.floor(prices.length / 2)],
-    };
-  }
-  return stats;
+function cbcMonthToIso(period) {
+  const m = String(period).match(/^(\d{4})M(\d{2})$/);
+  if (!m) return null;
+  return `${m[1]}-${m[2]}`;
 }
 
-function mergeSeries(housing, taiex, rates, txStats) {
+async function fetchCbcDataSets(fileName) {
+  const res = await fetch(`${CBC_API}${fileName}`);
+  if (!res.ok) throw new Error(`央行 API 失敗 ${fileName}: ${res.status}`);
+  const json = await res.json();
+  return json.data?.dataSets ?? [];
+}
+
+async function downloadCpiXml() {
+  try {
+    const res = await fetch(CPI_XML_URL);
+    if (res.ok) return res.text();
+  } catch {
+    /* Node TLS 對 ws.dgbas.gov.tw 可能失敗，改以 curl 下載 */
+  }
+  return execFileSync('curl', ['-fsSL', CPI_XML_URL], {
+    encoding: 'utf8',
+    maxBuffer: 32 * 1024 * 1024,
+  });
+}
+
+async function fetchTaiwanCpiMonthly() {
+  const text = await downloadCpiXml();
+  const byMonth = {};
+
+  for (const block of text.match(/<Obs>[\s\S]*?<\/Obs>/g) ?? []) {
+    const item = block.match(/<Item>([^<]*)<\/Item>/)?.[1] ?? '';
+    if (!item.startsWith('總指數')) continue;
+
+    const period = block.match(/<TIME_PERIOD>([^<]*)<\/TIME_PERIOD>/)?.[1];
+    const type = block.match(/<TYPE>([^<]*)<\/TYPE>/)?.[1];
+    const rawValue = block.match(/<Item_VALUE>([^<]*)<\/Item_VALUE>/)?.[1]?.trim();
+    const m = period?.match(/^(\d{4})M(\d{2})$/);
+    if (!m || !rawValue) continue;
+
+    const month = `${m[1]}-${m[2]}`;
+    if (!byMonth[month]) byMonth[month] = {};
+    const value = parseFloat(rawValue);
+    if (Number.isNaN(value)) continue;
+
+    if (type === '原始值') byMonth[month].index = value;
+    if (type === '年增率(%)') byMonth[month].inflation = value;
+  }
+
+  for (const [month, row] of Object.entries(byMonth)) {
+    if (row.inflation != null || row.index == null) continue;
+    const [y, mo] = month.split('-').map(Number);
+    const prevKey = `${y - 1}-${String(mo).padStart(2, '0')}`;
+    const prev = byMonth[prevKey]?.index;
+    if (prev) row.inflation = ((row.index - prev) / prev) * 100;
+  }
+
+  return byMonth;
+}
+
+async function fetchM2Monthly() {
+  const rows = await fetchCbcDataSets('EF15M01');
+  const byMonth = {};
+  for (const row of rows) {
+    const month = cbcMonthToIso(row[0]);
+    if (!month) continue;
+    const levelIdx = 1 + M2_METRIC_INDEX * 2;
+    const yoyIdx = levelIdx + 1;
+    const level = parseFloat(row[levelIdx]);
+    const yoy = parseFloat(row[yoyIdx]);
+    if (Number.isNaN(yoy)) continue;
+    byMonth[month] = {
+      level: Number.isNaN(level) ? null : level,
+      yoy,
+    };
+  }
+  return byMonth;
+}
+
+async function fetchMortgageRates() {
+  const rows = await fetchCbcDataSets('EH45M01');
+  const byMonth = {};
+  for (const row of rows) {
+    const month = cbcMonthToIso(row[0]);
+    if (!month) continue;
+    const rate = parseFloat(row[MORTGAGE_RATE_INDEX]);
+    if (!Number.isNaN(rate)) byMonth[month] = rate;
+  }
+  return byMonth;
+}
+
+async function fetchUsdTwdMonthly() {
+  const rows = await fetchCbcDataSets('BP01D01');
+  const buckets = {};
+  for (const row of rows) {
+    const date = String(row[0]);
+    if (date.length < 6) continue;
+    const month = `${date.slice(0, 4)}-${date.slice(4, 6)}`;
+    const rate = parseFloat(row[USD_TWD_INDEX]);
+    if (Number.isNaN(rate)) continue;
+    if (!buckets[month]) buckets[month] = [];
+    buckets[month].push(rate);
+  }
+  const byMonth = {};
+  for (const [month, rates] of Object.entries(buckets)) {
+    byMonth[month] =
+      rates.reduce((sum, v) => sum + v, 0) / rates.length;
+  }
+  return byMonth;
+}
+
+async function fetchFredSeries(seriesId, startDate = '2018-01-01') {
+  const apiKey = process.env.FRED_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      '請在專案根目錄建立 .env 並設定 FRED_API_KEY（可參考 .env.example）',
+    );
+  }
+  const url = new URL(
+    'https://api.stlouisfed.org/fred/series/observations',
+  );
+  url.searchParams.set('series_id', seriesId);
+  url.searchParams.set('api_key', apiKey);
+  url.searchParams.set('file_type', 'json');
+  url.searchParams.set('observation_start', startDate);
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`FRED ${seriesId} 失敗: ${res.status}`);
+  const json = await res.json();
+  if (json.error_message) {
+    throw new Error(`FRED ${seriesId}: ${json.error_message}`);
+  }
+
+  const byMonth = {};
+  for (const obs of json.observations ?? []) {
+    if (!obs.date || obs.value === '.') continue;
+    const month = obs.date.slice(0, 7);
+    const value = parseFloat(obs.value);
+    if (!Number.isNaN(value)) byMonth[month] = value;
+  }
+  return byMonth;
+}
+
+async function fetchFredBundle() {
+  let cache = {};
+  try {
+    cache = JSON.parse(readFileSync(FRED_CACHE, 'utf8'));
+  } catch {
+    /* no cache */
+  }
+
+  const needsFetch =
+    !cache.fedFunds ||
+    !cache.fedAssets ||
+    Object.keys(cache.fedFunds ?? {}).length < 12;
+
+  if (needsFetch) {
+    console.log('  下載 FRED（FEDFUNDS、WALCL）…');
+    cache = {
+      updatedAt: new Date().toISOString(),
+      fedFunds: await fetchFredSeries('FEDFUNDS'),
+      fedAssets: await fetchFredSeries('WALCL'),
+    };
+    mkdirSync(dirname(FRED_CACHE), { recursive: true });
+    writeFileSync(FRED_CACHE, JSON.stringify(cache, null, 2));
+  } else {
+    console.log('  載入 FRED 快取');
+  }
+
+  return cache;
+}
+
+function monthToQuarter(month) {
+  const [y, m] = month.split('-').map(Number);
+  const q = Math.ceil(m / 3);
+  return `${y}-Q${q}`;
+}
+
+async function scrapeMoiNationalHousingIndex() {
+  const res = await fetch(MOI_HOUSING_INDEX_URL, { headers: MOI_FETCH_HEADERS });
+  if (!res.ok) {
+    console.warn(`  內政部住宅價格指數頁面失敗: ${res.status}`);
+    return null;
+  }
+  const html = await res.text();
+  const periodMatch = html.match(/表1\s*(\d{3})年\s*第\s*(\d)\s*季/);
+  const indexMatch = html.match(
+    /<tr><td>全國<\/td><td[^>]*>([\d.]+)<\/td>/,
+  );
+  if (!periodMatch || !indexMatch) return null;
+
+  const rocYear = parseInt(periodMatch[1], 10);
+  const quarter = parseInt(periodMatch[2], 10);
+  const westernYear = rocYear + 1911;
+  return {
+    quarter: `${westernYear}-Q${quarter}`,
+    index: parseFloat(indexMatch[1]),
+  };
+}
+
+async function loadNationalHousingPriceIndex() {
+  let data;
+  try {
+    data = JSON.parse(readFileSync(NATIONAL_INDEX_CACHE, 'utf8'));
+  } catch {
+    data = { quarterly: [] };
+  }
+
+  const latest = await scrapeMoiNationalHousingIndex();
+  if (latest && !Number.isNaN(latest.index)) {
+    const idx = data.quarterly.findIndex((r) => r.quarter === latest.quarter);
+    if (idx >= 0) {
+      data.quarterly[idx].index = latest.index;
+    } else {
+      data.quarterly.push(latest);
+    }
+    data.quarterly.sort((a, b) => a.quarter.localeCompare(b.quarter));
+    data.updatedAt = new Date().toISOString().slice(0, 10);
+    writeFileSync(NATIONAL_INDEX_CACHE, JSON.stringify(data, null, 2));
+    console.log(
+      `  更新全國住宅價格指數：${latest.quarter} = ${latest.index}`,
+    );
+  } else {
+    console.log('  載入全國住宅價格指數快取（內政部頁面未更新）');
+  }
+
+  const byQuarter = {};
+  for (const row of data.quarterly ?? []) {
+    byQuarter[row.quarter] = row.index;
+  }
+  return byQuarter;
+}
+
+async function scrapeMoiNationalAffordability() {
+  const res = await fetch(MOI_AFFORDABILITY_URL, { headers: MOI_FETCH_HEADERS });
+  if (!res.ok) {
+    console.warn(`  內政部房價負擔頁面失敗: ${res.status}`);
+    return null;
+  }
+  const html = await res.text();
+  const ratioMatch = html.match(
+    /<td headers="t1c1">全國<\/td>[\s\S]*?<td headers="t1c4 t1c41">([\d.]+)<\/td>/,
+  );
+  const periodMatch = html.match(/(\d{3})\s*年\s*第\s*(\d)\s*季/);
+  if (!ratioMatch || !periodMatch) return null;
+
+  const rocYear = parseInt(periodMatch[1], 10);
+  const quarter = parseInt(periodMatch[2], 10);
+  const westernYear = rocYear + 1911;
+  return {
+    quarter: `${westernYear}-Q${quarter}`,
+    priceToIncome: parseFloat(ratioMatch[1]),
+  };
+}
+
+async function loadHousingAffordability() {
+  let data;
+  try {
+    data = JSON.parse(readFileSync(AFFORDABILITY_CACHE, 'utf8'));
+  } catch {
+    data = { quarterly: [] };
+  }
+
+  const latest = await scrapeMoiNationalAffordability();
+  if (latest && !Number.isNaN(latest.priceToIncome)) {
+    const idx = data.quarterly.findIndex((r) => r.quarter === latest.quarter);
+    if (idx >= 0) {
+      data.quarterly[idx].priceToIncome = latest.priceToIncome;
+    } else {
+      data.quarterly.push(latest);
+    }
+    data.quarterly.sort((a, b) => a.quarter.localeCompare(b.quarter));
+    data.updatedAt = new Date().toISOString().slice(0, 10);
+    writeFileSync(AFFORDABILITY_CACHE, JSON.stringify(data, null, 2));
+    console.log(
+      `  更新全國房價所得比：${latest.quarter} = ${latest.priceToIncome} 倍`,
+    );
+  } else {
+    console.log('  載入房價所得比快取（內政部頁面未更新）');
+  }
+
+  const byQuarter = {};
+  for (const row of data.quarterly ?? []) {
+    byQuarter[row.quarter] = row.priceToIncome;
+  }
+  return byQuarter;
+}
+
+function mergeSeries(
+  housing,
+  taiex,
+  rates,
+  m2,
+  mortgage,
+  usdTwd,
+  fred,
+  cpi,
+  affordabilityByQuarter,
+  nationalIndexByQuarter,
+) {
   const months = Object.keys(housing).sort();
   const rows = [];
   let prevTaiex = null;
@@ -294,8 +614,15 @@ function mergeSeries(housing, taiex, rates, txStats) {
     const h = housing[month];
     const t = taiex[month];
     const r = rates[month];
-    const tx = txStats[month];
-    if (!h || !t || !r) continue;
+    const m2Row = m2[month];
+    const mort = mortgage[month];
+    const fx = usdTwd[month];
+    const fedFunds = fred.fedFunds?.[month];
+    const fedAssets = fred.fedAssets?.[month];
+    const cpiRow = cpi[month];
+    if (!h || !t || !r || !m2Row || mort == null || fedFunds == null) {
+      continue;
+    }
 
     const taiexReturn =
       prevTaiex && prevTaiex > 0
@@ -311,8 +638,19 @@ function mergeSeries(housing, taiex, rates, txStats) {
       taiexReturn,
       rediscountRate: r.rediscount,
       securedRate: r.secured,
-      transactionCount: tx?.count ?? 0,
-      transactionMedian: tx?.median ?? null,
+      mortgageRate: mort,
+      m2Level: m2Row.level,
+      m2Log: m2Row.level != null ? Math.log(m2Row.level) : null,
+      m2Yoy: m2Row.yoy,
+      usdTwd: fx ?? null,
+      fedFundsRate: fedFunds,
+      fedAssetsBn: fedAssets != null ? fedAssets / 1000 : null,
+      cpiIndex: cpiRow?.index ?? null,
+      cpiInflation: cpiRow?.inflation ?? null,
+      priceToIncomeRatio:
+        affordabilityByQuarter[monthToQuarter(month)] ?? null,
+      nationalHousingIndex:
+        nationalIndexByQuarter[monthToQuarter(month)] ?? null,
     });
   }
   return rows;
@@ -330,31 +668,57 @@ async function main() {
   console.log('下載台股加權指數（逐月，需數分鐘）…');
   const taiex = await fetchTaiexMonthly(2018, 2026);
 
-  console.log('聚合實價登錄成交量…');
-  const txStats = aggregateTransactionsByMonth();
+  console.log('下載央行 M2、房貸利率、匯率…');
+  console.log('下載主計處 CPI／通膨率…');
+  const [m2, mortgage, usdTwd, cpi] = await Promise.all([
+    fetchM2Monthly(),
+    fetchMortgageRates(),
+    fetchUsdTwdMonthly(),
+    fetchTaiwanCpiMonthly(),
+  ]);
 
-  const series = mergeSeries(housing, taiex, rates, txStats);
+  console.log('下載美國 FRED 總經資料…');
+  const fred = await fetchFredBundle();
+
+  console.log('載入全國房價所得比（內政部）…');
+  const affordabilityByQuarter = await loadHousingAffordability();
+
+  console.log('載入全國住宅價格指數（內政部）…');
+  const nationalIndexByQuarter = await loadNationalHousingPriceIndex();
+
+  const series = mergeSeries(
+    housing,
+    taiex,
+    rates,
+    m2,
+    mortgage,
+    usdTwd,
+    fred,
+    cpi,
+    affordabilityByQuarter,
+    nationalIndexByQuarter,
+  );
   const recent = series.filter((r) => r.month >= '2018-01');
   console.log(`合併後樣本：${recent.length} 個月（2018–至今）`);
 
   const y = recent.map((r) => r.housingUnitPrice);
   const variableIds = [
     'taiex_close',
-    'taiex_return',
-    'rediscount_rate',
-    'log_transaction_count',
+    'mortgage_rate',
+    'm2_yoy',
+    'fed_funds_rate',
   ];
   const variableLabels = [
     '加權指數（收盤）',
-    '加權指數月報酬率',
-    '央行重貼現率',
-    '實價登錄成交量（log）',
+    '五大銀行新承作房貸利率',
+    'M2 年增率',
+    '美國聯邦基金利率',
   ];
   const X = recent.map((r) => [
     r.taiexClose,
-    r.taiexReturn,
-    r.rediscountRate,
-    Math.log1p(r.transactionCount),
+    r.mortgageRate,
+    r.m2Yoy,
+    r.fedFundsRate,
   ]);
 
   const analysis = analyzeExplanatoryPower(y, X, variableIds, variableLabels);
@@ -366,13 +730,22 @@ async function main() {
     taiex_close: recent.map((r) => r.taiexClose),
     taiex_return: recent.map((r) => r.taiexReturn),
     rediscount_rate: recent.map((r) => r.rediscountRate),
-    transaction_count: recent.map((r) => r.transactionCount),
+    mortgage_rate: recent.map((r) => r.mortgageRate),
+    m2_level: recent.map((r) => r.m2Level ?? 0),
+    m2_log: recent.map((r) => r.m2Log ?? 0),
+    m2_yoy: recent.map((r) => r.m2Yoy),
+    usd_twd: recent.map((r) => r.usdTwd ?? 0),
+    fed_funds_rate: recent.map((r) => r.fedFundsRate),
+    fed_assets_bn: recent.map((r) => r.fedAssetsBn ?? 0),
+    cpi_index: recent.map((r) => r.cpiIndex ?? 0),
+    cpi_inflation: recent.map((r) => r.cpiInflation ?? 0),
+    price_to_income_ratio: recent.map((r) => r.priceToIncomeRatio ?? 0),
   };
 
   const output = {
     updatedAt: new Date().toISOString(),
     description:
-      '以臺北市標準住宅單價（萬元/坪）為應變數之多元線性迴歸；partial R² 為該變數的邊際解釋力。',
+      '以臺北市標準住宅單價（萬元/坪）為應變數之多元線性迴歸；納入台股、房貸利率、M2 與美國聯邦基金利率。',
     period: { start: recent[0].month, end: recent[recent.length - 1].month },
     observations: recent.length,
     dependentVariable: {
@@ -403,14 +776,36 @@ async function main() {
         url: 'https://data.gov.tw/dataset/6022',
       },
       {
-        name: '臺北市實價周報（成交量）',
-        url: 'https://data.taipei/dataset/detail?id=a9a97996-3a55-46c8-9076-e5ebdefad6dc',
+        name: '央行貨幣總計數 M2',
+        url: 'https://cpx.cbc.gov.tw/Data/ExportToAPIInfo',
+      },
+      {
+        name: '五大銀行新承作放款利率',
+        url: 'https://cpx.cbc.gov.tw/Data/ExportToAPIInfo',
+      },
+      {
+        name: 'FRED（FEDFUNDS、WALCL）',
+        url: 'https://fred.stlouisfed.org/',
+      },
+      {
+        name: '消費者物價基本分類指數（主計總處）',
+        url: 'https://data.gov.tw/dataset/6019',
+      },
+      {
+        name: '房價負擔能力指標（內政部不動產資訊平台）',
+        url: 'https://pip.moi.gov.tw/Publicize/Info/E1050',
+      },
+      {
+        name: '全國住宅價格指數（內政部不動產資訊平台）',
+        url: 'https://pip.moi.gov.tw/Publicize/Info/E1060',
       },
     ],
     caveats: [
       '相關性不等於因果；總經變數與房價可能存在落後／領先關係。',
-      '實價周報成交量僅涵蓋部分臺北交易，與官方指數時間定義不同。',
-      '未納入國際事件、建照量等變數；可於 events 與營建統計擴充後重跑。',
+      'Fed 資產負債表（WALCL）作為 QE 代理指標，僅呈現於時間序列與相關矩陣。',
+      '房貸利率與 M2 來自央行統計；美國利率透過 FRED API 取得。',
+      '房價所得比為全國中位數住宅／家戶所得（季資料），與臺北市住宅單價口徑不同；圖上以季內各月填補同一值。',
+      '全國住宅價格指數（105年＝100）為內政部季指數，與臺北市月單價口徑不同；圖上以季內各月填補同一值。',
     ],
   };
 

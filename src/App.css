@@ -193,10 +193,79 @@ body,
   padding: 1rem;
 }
 
+.trend-chart-plot {
+  position: relative;
+}
+
 .trend-svg {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.trend-series-path {
+  pointer-events: none;
+}
+
+.trend-event-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.trend-event-hit {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  cursor: help;
+}
+
+.trend-event-hit:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: -2px;
+}
+
+.trend-event-tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%);
+  min-width: 10rem;
+  max-width: 15rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(15, 20, 25, 0.96);
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.12s ease, visibility 0.12s ease;
+  z-index: 2;
+}
+
+.trend-event-tip strong {
+  display: block;
+  color: #fbbf24;
+  margin-bottom: 0.15rem;
+  font-weight: 600;
+}
+
+.trend-event-hit:hover .trend-event-tip,
+.trend-event-hit:focus-visible .trend-event-tip {
+  visibility: visible;
+  opacity: 1;
 }
 
 .trend-legend {
@@ -213,18 +282,107 @@ body,
   gap: 0.35rem;
 }
 
+.trend-legend-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+.trend-legend-toggle input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.trend-legend-item--off {
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+
 .trend-swatch {
   width: 14px;
   height: 3px;
   border-radius: 2px;
 }
 
-.trend-range {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.72rem;
+.trend-axis-line {
+  stroke: var(--panel-border);
+  stroke-width: 1;
+}
+
+.trend-axis-grid {
+  stroke: rgba(42, 53, 72, 0.65);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.trend-axis-tick {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+}
+
+.trend-axis-label {
+  fill: var(--text-muted);
+  font-size: 10px;
+  font-family: 'PingFang TC', 'Noto Sans TC', sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.trend-event-line {
+  stroke: rgba(232, 237, 244, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  pointer-events: none;
+}
+
+.trend-event-dot {
+  fill: #fbbf24;
+  stroke: var(--bg);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.trend-event-label {
+  font-size: 9px;
+  fill: #fbbf24;
+  font-family: 'PingFang TC', 'Noto Sans TC', sans-serif;
+  pointer-events: none;
+}
+
+.trend-event-swatch {
+  background: transparent !important;
+  width: 0 !important;
+  height: 12px !important;
+  border-left: 1px dashed rgba(232, 237, 244, 0.5);
+  border-radius: 0 !important;
+}
+
+.trend-legend-events {
   color: var(--text-muted);
-  margin-top: 0.5rem;
+}
+
+.trend-event-list {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.trend-event-list li {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.5rem;
+  line-height: 1.4;
+}
+
+.trend-event-list-date {
+  color: #fbbf24;
+  font-variant-numeric: tabular-nums;
+}
+
+.trend-event-list-label {
+  color: var(--text-muted);
 }
 
 .caveats ul {

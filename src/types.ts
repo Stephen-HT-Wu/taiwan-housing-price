@@ -18,11 +18,38 @@ export interface DistrictIndex {
   changeRate: string;
 }
 
+export interface MrtStation {
+  id: string;
+  name: string;
+  nameEn: string;
+  lat: number;
+  lng: number;
+  address: string;
+  source: string;
+}
+
+export interface MrtRouteFeature {
+  type: 'Feature';
+  properties: {
+    routeName: string;
+    lineId: string;
+    lineName: string;
+    color: string;
+  };
+  geometry: {
+    type: 'LineString' | 'MultiLineString';
+    coordinates: number[][] | number[][][];
+  };
+}
+
 export interface HousingDataset {
   updatedAt: string;
+  mrtBufferRadiusM: number;
   sources: { name: string; url: string; license: string }[];
   transactions: TransactionPoint[];
   districtIndex: DistrictIndex[];
+  mrtStations: MrtStation[];
+  mrtRoutes: MrtRouteFeature[];
 }
 
 export interface ContourFeature {
@@ -41,4 +68,4 @@ export interface MapBounds {
   maxLng: number;
 }
 
-export type DataLayer = 'contour' | 'points' | 'district';
+export type DataLayer = 'contour' | 'points' | 'district' | 'mrt';

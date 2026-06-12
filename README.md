@@ -8,6 +8,7 @@
 |--------|----------|------|
 | [臺北市實價周報](https://data.taipei/dataset/detail?id=a9a97996-3a55-46c8-9076-e5ebdefad6dc) | 臺北市政府地政局 | 買賣／租賃交易明細 |
 | [臺北市住宅價格季指數](https://data.taipei/dataset/detail?id=954911b5-896d-4ae1-9ebe-87c4ba8a191e) | 臺北市政府地政局 | 12 行政區標準住宅單價 |
+| [臺北捷運車站](https://data.taipei/dataset/detail?id=1eefa68d-7c8d-491b-8e75-66a161947426) | 臺北捷運公司 | 車站座標（同步 TDX） |
 
 資料授權：政府資料開放授權條款
 
@@ -16,6 +17,7 @@
 - **房價等高線**：以 IDW 空間插值從交易點生成每坪單價等高線
 - **交易點位**：顯示各筆實價登錄成交位置與單價
 - **行政區指數**：疊加各區標準住宅單價（季指數）
+- **捷運路網**：依營運路線代表色繪製路網（臺北市政府捷運局開放圖資）
 - **篩選**：依行政區、單價區間篩選
 
 ## 快速開始
@@ -25,6 +27,8 @@ npm install
 npm run fetch-data   # 從臺北市資料大平臺下載並處理資料
 npm run dev          # 啟動開發伺服器
 ```
+
+可選：設定 `TDX_CLIENT_ID` 與 `TDX_CLIENT_SECRET` 環境變數，`fetch-data` 會優先從 [TDX](https://tdx.transportdata.tw/) 取得捷運站資料。
 
 開啟 http://localhost:5173
 

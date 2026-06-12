@@ -148,7 +148,9 @@ export function priceColorScale(min: number, max: number) {
     '#a50026',
   ];
 
-  return scaleLinear<string>().domain(
-    colors.map((_, i) => min + ((max - min) * i) / (colors.length - 1)),
-  ).range(colors);
+  const span = max - min || 1;
+  return scaleLinear<string>()
+    .domain(colors.map((_, i) => min + (span * i) / (colors.length - 1)))
+    .range(colors)
+    .clamp(true);
 }

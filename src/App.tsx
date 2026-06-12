@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { HousingContourMap } from './components/HousingContourMap';
 import { ControlPanel } from './components/ControlPanel';
 import { MapLegend } from './components/MapLegend';
+import { MrtLineLegend } from './components/MrtLineLegend';
 import {
   filterTransactions,
   getPriceStats,
@@ -19,7 +20,19 @@ export default function App() {
   const [activeLayers, setActiveLayers] = useState<DataLayer[]>([
     'contour',
     'points',
+    'mrt',
   ]);
+  const [colorDomain, setColorDomain] = useState({
+    colorMin: 0,
+    colorMax: 100,
+    median: 50,
+    outlierCount: 0,
+  });
+
+  const handleColorDomainChange = useCallback(
+    (domain: typeof colorDomain) => setColorDomain(domain),
+    [],
+  );
 
   useEffect(() => {
     loadHousingData()
@@ -77,15 +90,24 @@ export default function App() {
         activeLayers={activeLayers}
         onLayersChange={setActiveLayers}
         stats={stats}
+        mrtRouteCount={data.mrtRoutes.length}
         updatedAt={data.updatedAt}
       />
       <main className="map-wrap">
         <HousingContourMap
           transactions={filtered}
           districtIndex={data.districtIndex}
+          mrtRoutes={data.mrtRoutes ?? []}
           activeLayers={activeLayers}
+          onColorDomainChange={handleColorDomainChange}
         />
-        <MapLegend min={stats.min || globalStats.min} max={stats.max || globalStats.max} />
+        {activeLayers.includes('mrt') && <MrtLineLegend />}
+        <MapLegend
+          colorMin={colorDomain.colorMin}
+          colorMax={colorDomain.colorMax}
+          median={colorDomain.median}
+          outlierCount={colorDomain.outlierCount}
+        />
       </main>
     </div>
   );

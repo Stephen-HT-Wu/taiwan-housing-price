@@ -11,6 +11,7 @@ interface ControlPanelProps {
   activeLayers: DataLayer[];
   onLayersChange: (layers: DataLayer[]) => void;
   stats: { count: number; median: number };
+  mrtRouteCount: number;
   updatedAt: string;
 }
 
@@ -24,6 +25,7 @@ export function ControlPanel({
   activeLayers,
   onLayersChange,
   stats,
+  mrtRouteCount,
   updatedAt,
 }: ControlPanelProps) {
   const toggleDistrict = (d: string) => {
@@ -76,6 +78,17 @@ export function ControlPanel({
             onChange={() => toggleLayer('district')}
           />
           行政區指數
+        </label>
+        <label className="checkbox-row">
+          <input
+            type="checkbox"
+            checked={activeLayers.includes('mrt')}
+            onChange={() => toggleLayer('mrt')}
+          />
+          捷運路網
+          {activeLayers.includes('mrt') && (
+            <span className="layer-meta">（{mrtRouteCount} 段）</span>
+          )}
         </label>
       </section>
 

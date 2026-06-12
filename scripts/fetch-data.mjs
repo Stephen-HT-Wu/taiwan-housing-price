@@ -5,10 +5,33 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import proj4 from 'proj4';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const WEEKLY_REPORT_RID = '2979c431-7a32-4067-9af2-e716cd825c4b';
 const QUARTERLY_INDEX_RID = '3210976b-f578-483c-8853-3ceec3796877';
+const MRT_STATION_RID = 'c77e91bf-067c-475e-917b-545ff62b7d76';
+const MRT_ROUTE_RID = '1139b06e-8128-4a07-8148-f27f038bd8b4';
+
+const TWD97_TM2 =
+  '+proj=tmerc +lat_0=0 +lon_0=121 +k=0.9999 +x_0=250000 +y_0=0 +ellps=GRS80 +units=m +no_defs';
+
+const MRT_LINE_STYLES = {
+  木柵線: { lineId: 'BR', lineName: '文湖線', color: '#C48C31' },
+  內湖線: { lineId: 'BR', lineName: '文湖線', color: '#C48C31' },
+  南港線: { lineId: 'BR', lineName: '文湖線', color: '#C48C31' },
+  淡水線: { lineId: 'R', lineName: '淡水信義線', color: '#E3002C' },
+  信義線: { lineId: 'R', lineName: '淡水信義線', color: '#E3002C' },
+  松山線: { lineId: 'G', lineName: '松山新店線', color: '#008659' },
+  新店線: { lineId: 'G', lineName: '松山新店線', color: '#008659' },
+  小南門線: { lineId: 'G', lineName: '松山新店線', color: '#008659' },
+  碧潭支線: { lineId: 'G', lineName: '松山新店線', color: '#008659' },
+  中和線: { lineId: 'O', lineName: '中和新蘆線', color: '#F8B61C' },
+  蘆洲線: { lineId: 'O', lineName: '中和新蘆線', color: '#F8B61C' },
+  新莊線: { lineId: 'O', lineName: '中和新蘆線', color: '#F8B61C' },
+  板橋線: { lineId: 'BL', lineName: '板南線', color: '#0070BD' },
+  環狀線: { lineId: 'Y', lineName: '環狀線', color: '#FFDB00' },
+};
 
 /** 臺北市 12 行政區近似範圍（TWD97 經緯度） */
 const DISTRICT_BOUNDS = {
@@ -137,11 +160,151 @@ function processDistrictIndex(csvText) {
   return Object.values(latest);
 }
 
+function parseQuotedField(value) {
+  const trimmed = value.trim();
+  const inner = trimmed.replace(/^'+|'+$/g, '');
+  if (inner.startsWith('{') && inner.endsWith('}')) {
+    return inner.slice(1, -1);
+  }
+  return inner;
+}
+
+function processMrtStations(rows) {
+  const byId = new Map();
+
+  for (const row of rows) {
+    const id = parseQuotedField(row.StationID || '');
+    if (!id || byId.has(id)) continue;
+
+    const nameParts = parseQuotedField(row.StationName || '').split(',');
+    const posParts = parseQuotedField(row.StationPosition || '').split(',');
+    const lng = parseFloat(posParts[0]);
+    const lat = parseFloat(posParts[1]);
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+
+    byId.set(id, {
+      id,
+      name: nameParts[0]?.trim() || id,
+      nameEn: nameParts[1]?.trim() || '',
+      lat,
+      lng,
+      address: (row.StationAddress || '').replace(/^'+|'+$/g, ''),
+      source: 'data.taipei',
+    });
+  }
+
+  return Array.from(byId.values());
+}
+
+async function fetchTdxToken() {
+  const clientId = process.env.TDX_CLIENT_ID;
+  const clientSecret = process.env.TDX_CLIENT_SECRET;
+  if (!clientId || !clientSecret) return null;
+
+  const res = await fetch(
+    'https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: clientId,
+        client_secret: clientSecret,
+      }),
+    },
+  );
+  if (!res.ok) throw new Error(`TDX auth failed: ${res.status}`);
+  const data = await res.json();
+  return data.access_token;
+}
+
+async function fetchMrtFromTdx() {
+  const token = await fetchTdxToken();
+  if (!token) return null;
+
+  const res = await fetch(
+    'https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/Station/TRTC?$format=JSON',
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  if (!res.ok) throw new Error(`TDX station fetch failed: ${res.status}`);
+
+  const stations = await res.json();
+  const byId = new Map();
+
+  for (const s of stations) {
+    const id = s.StationID;
+    if (!id || byId.has(id)) continue;
+    byId.set(id, {
+      id,
+      name: s.StationName?.Zh_tw || id,
+      nameEn: s.StationName?.En || '',
+      lat: s.StationPosition?.PositionLat,
+      lng: s.StationPosition?.PositionLon,
+      address: s.StationAddress || '',
+      source: 'TDX',
+    });
+  }
+
+  return Array.from(byId.values());
+}
+
+function transformCoord([x, y]) {
+  const [lng, lat] = proj4(TWD97_TM2, 'WGS84', [x, y]);
+  return [lng, lat];
+}
+
+function transformGeometry(geometry) {
+  if (geometry.type === 'LineString') {
+    return {
+      ...geometry,
+      coordinates: geometry.coordinates.map(transformCoord),
+    };
+  }
+  if (geometry.type === 'MultiLineString') {
+    return {
+      ...geometry,
+      coordinates: geometry.coordinates.map((line) =>
+        line.map(transformCoord),
+      ),
+    };
+  }
+  return geometry;
+}
+
+function processMrtRoutes(geojson) {
+  return geojson.features
+    .map((feature) => {
+      const routeName = feature.properties?.RouteName;
+      const style = MRT_LINE_STYLES[routeName];
+      if (!style) return null;
+
+      return {
+        type: 'Feature',
+        properties: {
+          routeName,
+          lineId: style.lineId,
+          lineName: style.lineName,
+          color: style.color,
+        },
+        geometry: transformGeometry(feature.geometry),
+      };
+    })
+    .filter(Boolean);
+}
+
 async function fetchCsv(rid) {
   const url = `https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=${rid}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch ${rid}: ${res.status}`);
   return res.text();
+}
+
+async function fetchJson(rid) {
+  const url = `https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=${rid}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${rid}: ${res.status}`);
+  return res.json();
 }
 
 async function main() {
@@ -156,8 +319,31 @@ async function main() {
   const districtIndex = processDistrictIndex(indexCsv);
   console.log(`行政區指數：${districtIndex.length} 區`);
 
+  let mrtStations = null;
+  try {
+    mrtStations = await fetchMrtFromTdx();
+    if (mrtStations) {
+      console.log(`捷運站（TDX）：${mrtStations.length} 站`);
+    }
+  } catch (err) {
+    console.warn('TDX 捷運站下載失敗，改用臺北市資料大平臺：', err.message);
+  }
+
+  if (!mrtStations) {
+    console.log('下載臺北捷運車站資料…');
+    const mrtCsv = await fetchCsv(MRT_STATION_RID);
+    mrtStations = processMrtStations(parseCsv(mrtCsv));
+    console.log(`捷運站（data.taipei）：${mrtStations.length} 站`);
+  }
+
+  console.log('下載臺北都會區捷運路網圖資…');
+  const mrtRouteGeojson = await fetchJson(MRT_ROUTE_RID);
+  const mrtRoutes = processMrtRoutes(mrtRouteGeojson);
+  console.log(`捷運路網：${mrtRoutes.length} 段`);
+
   const output = {
     updatedAt: new Date().toISOString(),
+    mrtBufferRadiusM: 800,
     sources: [
       {
         name: '臺北市實價周報',
@@ -169,9 +355,21 @@ async function main() {
         url: 'https://data.taipei/dataset/detail?id=954911b5-896d-4ae1-9ebe-87c4ba8a191e',
         license: '政府資料開放授權條款',
       },
+      {
+        name: '臺北捷運車站（TDX / 臺北市資料大平臺）',
+        url: 'https://data.taipei/dataset/detail?id=1eefa68d-7c8d-491b-8e75-66a161947426',
+        license: '政府資料開放授權條款',
+      },
+      {
+        name: '臺北都會區大眾捷運系統路網圖',
+        url: 'https://data.taipei/dataset/detail?id=afccd2ac-75b1-4362-9099-45983e332776',
+        license: '政府資料開放授權條款',
+      },
     ],
     transactions,
     districtIndex,
+    mrtStations,
+    mrtRoutes,
   };
 
   const outDir = join(__dirname, '../public/data');

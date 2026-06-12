@@ -1,0 +1,1201 @@
+{
+  "updatedAt": "2026-06-12T08:39:21.316Z",
+  "description": "以臺北市標準住宅單價（萬元/坪）為應變數之多元線性迴歸；partial R² 為該變數的邊際解釋力。",
+  "period": {
+    "start": "2018-01",
+    "end": "2026-02"
+  },
+  "observations": 98,
+  "dependentVariable": {
+    "id": "housing_unit_price",
+    "label": "臺北市標準住宅單價（萬元/坪）"
+  },
+  "model": {
+    "r2": 0.9119813735256854,
+    "adjR2": 0.9081956261504461,
+    "intercept": 35.218821958544616
+  },
+  "variables": [
+    {
+      "id": "taiex_close",
+      "label": "加權指數（收盤）",
+      "coefficient": 0.0005887348258289404,
+      "stdCoefficient": 0.6063817062258853,
+      "partialR2": 0.5438789804939769
+    },
+    {
+      "id": "rediscount_rate",
+      "label": "央行重貼現率",
+      "coefficient": 7.993347472134076,
+      "stdCoefficient": 0.46883849372668207,
+      "partialR2": 0.4908960421681087
+    },
+    {
+      "id": "log_transaction_count",
+      "label": "實價登錄成交量（log）",
+      "coefficient": -0.7396625983126484,
+      "stdCoefficient": -0.1074706423415544,
+      "partialR2": 0.07784141940313989
+    },
+    {
+      "id": "taiex_return",
+      "label": "加權指數月報酬率",
+      "coefficient": -8.16841973721661,
+      "stdCoefficient": -0.08850497826317126,
+      "partialR2": 0.0750036672927228
+    }
+  ],
+  "correlation": {
+    "housing_unit_price": {
+      "housing_unit_price": 1,
+      "housing_index": 0.9999996118715481,
+      "taiex_close": 0.8734705552009595,
+      "taiex_return": 0.11181196532629228,
+      "rediscount_rate": 0.8891711658467155,
+      "transaction_count": 0.2542782668237553
+    },
+    "housing_index": {
+      "housing_unit_price": 0.9999996118715481,
+      "housing_index": 1,
+      "taiex_close": 0.8733394954304187,
+      "taiex_return": 0.11170117612505504,
+      "rediscount_rate": 0.8891550535501263,
+      "transaction_count": 0.25404884796828614
+    },
+    "taiex_close": {
+      "housing_unit_price": 0.8734705552009595,
+      "housing_index": 0.8733394954304187,
+      "taiex_close": 1,
+      "taiex_return": 0.26287758650506676,
+      "rediscount_rate": 0.7298214278578946,
+      "transaction_count": 0.5675672428561939
+    },
+    "taiex_return": {
+      "housing_unit_price": 0.11181196532629228,
+      "housing_index": 0.11170117612505504,
+      "taiex_close": 0.26287758650506676,
+      "taiex_return": 1,
+      "rediscount_rate": 0.11145321474312025,
+      "transaction_count": 0.1940886331898578
+    },
+    "rediscount_rate": {
+      "housing_unit_price": 0.8891711658467155,
+      "housing_index": 0.8891550535501263,
+      "taiex_close": 0.7298214278578946,
+      "taiex_return": 0.11145321474312025,
+      "rediscount_rate": 1,
+      "transaction_count": 0.21030153423153386
+    },
+    "transaction_count": {
+      "housing_unit_price": 0.2542782668237553,
+      "housing_index": 0.25404884796828614,
+      "taiex_close": 0.5675672428561939,
+      "taiex_return": 0.1940886331898578,
+      "rediscount_rate": 0.21030153423153386,
+      "transaction_count": 1
+    }
+  },
+  "timeSeries": [
+    {
+      "month": "2018-01",
+      "housingUnitPrice": 50.37,
+      "housingIndex": 99.83,
+      "taiexClose": 11103.79,
+      "taiexReturn": 0,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-02",
+      "housingUnitPrice": 49.87,
+      "housingIndex": 98.86,
+      "taiexClose": 10815.47,
+      "taiexReturn": -0.025965908937398988,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-03",
+      "housingUnitPrice": 49.6,
+      "housingIndex": 98.31,
+      "taiexClose": 10919.49,
+      "taiexReturn": 0.009617705009583536,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-04",
+      "housingUnitPrice": 49.91,
+      "housingIndex": 98.92,
+      "taiexClose": 10657.88,
+      "taiexReturn": -0.023958078628214374,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-05",
+      "housingUnitPrice": 50.65,
+      "housingIndex": 100.4,
+      "taiexClose": 10874.96,
+      "taiexReturn": 0.02036802816319943,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-06",
+      "housingUnitPrice": 50.62,
+      "housingIndex": 100.33,
+      "taiexClose": 10836.91,
+      "taiexReturn": -0.00349886344409536,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-07",
+      "housingUnitPrice": 50.9,
+      "housingIndex": 100.88,
+      "taiexClose": 11057.51,
+      "taiexReturn": 0.0203563561937859,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-08",
+      "housingUnitPrice": 50.83,
+      "housingIndex": 100.75,
+      "taiexClose": 11063.94,
+      "taiexReturn": 0.0005815052394255389,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-09",
+      "housingUnitPrice": 50.51,
+      "housingIndex": 100.12,
+      "taiexClose": 11006.34,
+      "taiexReturn": -0.005206101985368717,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-10",
+      "housingUnitPrice": 50.77,
+      "housingIndex": 100.63,
+      "taiexClose": 9802.13,
+      "taiexReturn": -0.1094105760861468,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-11",
+      "housingUnitPrice": 50.96,
+      "housingIndex": 101.01,
+      "taiexClose": 9888.03,
+      "taiexReturn": 0.008763401423976367,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2018-12",
+      "housingUnitPrice": 50.43,
+      "housingIndex": 99.96,
+      "taiexClose": 9727.41,
+      "taiexReturn": -0.016243882755210166,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-01",
+      "housingUnitPrice": 50.49,
+      "housingIndex": 100.07,
+      "taiexClose": 9932.26,
+      "taiexReturn": 0.021059048605949617,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-02",
+      "housingUnitPrice": 50.94,
+      "housingIndex": 100.97,
+      "taiexClose": 10389.17,
+      "taiexReturn": 0.046002621759800875,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-03",
+      "housingUnitPrice": 51.76,
+      "housingIndex": 102.59,
+      "taiexClose": 10641.04,
+      "taiexReturn": 0.024243515121997312,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-04",
+      "housingUnitPrice": 52.12,
+      "housingIndex": 103.3,
+      "taiexClose": 10967.73,
+      "taiexReturn": 0.03070094652402384,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-05",
+      "housingUnitPrice": 52,
+      "housingIndex": 103.06,
+      "taiexClose": 10498.49,
+      "taiexReturn": -0.04278369361754892,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-06",
+      "housingUnitPrice": 51.82,
+      "housingIndex": 102.7,
+      "taiexClose": 10730.83,
+      "taiexReturn": 0.022130801667668412,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-07",
+      "housingUnitPrice": 51.15,
+      "housingIndex": 101.39,
+      "taiexClose": 10823.81,
+      "taiexReturn": 0.008664753798168414,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-08",
+      "housingUnitPrice": 51.34,
+      "housingIndex": 101.76,
+      "taiexClose": 10618.05,
+      "taiexReturn": -0.01900994197052611,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-09",
+      "housingUnitPrice": 51.53,
+      "housingIndex": 102.14,
+      "taiexClose": 10829.68,
+      "taiexReturn": 0.019931154967249263,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 2,
+      "transactionMedian": 56.17
+    },
+    {
+      "month": "2019-10",
+      "housingUnitPrice": 52.04,
+      "housingIndex": 103.16,
+      "taiexClose": 11358.71,
+      "taiexReturn": 0.048850012188725686,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-11",
+      "housingUnitPrice": 52.15,
+      "housingIndex": 103.37,
+      "taiexClose": 9932.26,
+      "taiexReturn": -0.12558204232698952,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2019-12",
+      "housingUnitPrice": 52.54,
+      "housingIndex": 104.14,
+      "taiexClose": 11997.14,
+      "taiexReturn": 0.2078962894648347,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 1,
+      "transactionMedian": 57.33
+    },
+    {
+      "month": "2020-01",
+      "housingUnitPrice": 52.71,
+      "housingIndex": 104.47,
+      "taiexClose": 11495.1,
+      "taiexReturn": -0.04184664011589421,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 1,
+      "transactionMedian": 54.52
+    },
+    {
+      "month": "2020-02",
+      "housingUnitPrice": 52.29,
+      "housingIndex": 103.65,
+      "taiexClose": 11292.17,
+      "taiexReturn": -0.017653608929021954,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2020-03",
+      "housingUnitPrice": 52.41,
+      "housingIndex": 103.88,
+      "taiexClose": 9708.06,
+      "taiexReturn": -0.14028393125502012,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2020-04",
+      "housingUnitPrice": 52.11,
+      "housingIndex": 103.28,
+      "taiexClose": 10992.14,
+      "taiexReturn": 0.13226947505474831,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2020-05",
+      "housingUnitPrice": 52.45,
+      "housingIndex": 103.95,
+      "taiexClose": 10942.16,
+      "taiexReturn": -0.004546885319873979,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 4,
+      "transactionMedian": 54.98
+    },
+    {
+      "month": "2020-06",
+      "housingUnitPrice": 52.49,
+      "housingIndex": 104.03,
+      "taiexClose": 11621.24,
+      "taiexReturn": 0.06206087280756267,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 1,
+      "transactionMedian": 56.68
+    },
+    {
+      "month": "2020-07",
+      "housingUnitPrice": 52.6,
+      "housingIndex": 104.26,
+      "taiexClose": 12664.8,
+      "taiexReturn": 0.08979764637852755,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 1,
+      "transactionMedian": 53.94
+    },
+    {
+      "month": "2020-08",
+      "housingUnitPrice": 52.92,
+      "housingIndex": 104.89,
+      "taiexClose": 12591.45,
+      "taiexReturn": -0.005791642978965206,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 1,
+      "transactionMedian": 52.25
+    },
+    {
+      "month": "2020-09",
+      "housingUnitPrice": 53.21,
+      "housingIndex": 105.46,
+      "taiexClose": 12515.61,
+      "taiexReturn": -0.0060231347461968355,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2020-10",
+      "housingUnitPrice": 53.47,
+      "housingIndex": 105.98,
+      "taiexClose": 12546.34,
+      "taiexReturn": 0.0024553337791765294,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 2,
+      "transactionMedian": 54.73
+    },
+    {
+      "month": "2020-11",
+      "housingUnitPrice": 53.41,
+      "housingIndex": 105.86,
+      "taiexClose": 13722.89,
+      "taiexReturn": 0.09377635230672844,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2020-12",
+      "housingUnitPrice": 53.43,
+      "housingIndex": 105.9,
+      "taiexClose": 14732.53,
+      "taiexReturn": 0.07357342367387637,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2021-01",
+      "housingUnitPrice": 53.64,
+      "housingIndex": 106.31,
+      "taiexClose": 15138.31,
+      "taiexReturn": 0.02754313074536409,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 3,
+      "transactionMedian": 74.72
+    },
+    {
+      "month": "2021-02",
+      "housingUnitPrice": 54,
+      "housingIndex": 107.03,
+      "taiexClose": 15953.8,
+      "taiexReturn": 0.053869289240344516,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2021-03",
+      "housingUnitPrice": 54.22,
+      "housingIndex": 107.47,
+      "taiexClose": 16431.13,
+      "taiexReturn": 0.029919517607090586,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 3,
+      "transactionMedian": 88.98
+    },
+    {
+      "month": "2021-04",
+      "housingUnitPrice": 54.08,
+      "housingIndex": 107.2,
+      "taiexClose": 17566.66,
+      "taiexReturn": 0.06910845450069464,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 6,
+      "transactionMedian": 86.7
+    },
+    {
+      "month": "2021-05",
+      "housingUnitPrice": 54.32,
+      "housingIndex": 107.67,
+      "taiexClose": 17068.43,
+      "taiexReturn": -0.02836224985284622,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 4,
+      "transactionMedian": 75.16
+    },
+    {
+      "month": "2021-06",
+      "housingUnitPrice": 54.01,
+      "housingIndex": 107.05,
+      "taiexClose": 17755.46,
+      "taiexReturn": 0.04025150526439742,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2021-07",
+      "housingUnitPrice": 54.2,
+      "housingIndex": 107.42,
+      "taiexClose": 17247.41,
+      "taiexReturn": -0.0286137334656494,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 3,
+      "transactionMedian": 71.87
+    },
+    {
+      "month": "2021-08",
+      "housingUnitPrice": 54.46,
+      "housingIndex": 107.95,
+      "taiexClose": 18218.84,
+      "taiexReturn": 0.05632323925737257,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 3,
+      "transactionMedian": 139.46
+    },
+    {
+      "month": "2021-09",
+      "housingUnitPrice": 55.05,
+      "housingIndex": 109.12,
+      "taiexClose": 16934.77,
+      "taiexReturn": -0.07048033793589492,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 1,
+      "transactionMedian": 86.02
+    },
+    {
+      "month": "2021-10",
+      "housingUnitPrice": 55.71,
+      "housingIndex": 110.42,
+      "taiexClose": 16987.41,
+      "taiexReturn": 0.0031083976930303403,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2021-11",
+      "housingUnitPrice": 56,
+      "housingIndex": 111.01,
+      "taiexClose": 17427.76,
+      "taiexReturn": 0.025922138807505,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2021-12",
+      "housingUnitPrice": 56.52,
+      "housingIndex": 112.02,
+      "taiexClose": 18218.84,
+      "taiexReturn": 0.04539194939567689,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2022-01",
+      "housingUnitPrice": 56.87,
+      "housingIndex": 112.73,
+      "taiexClose": 17674.4,
+      "taiexReturn": -0.029883351519635646,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2022-02",
+      "housingUnitPrice": 57.23,
+      "housingIndex": 113.43,
+      "taiexClose": 17652.18,
+      "taiexReturn": -0.0012571855338795752,
+      "rediscountRate": 1.25,
+      "securedRate": 1.5,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2022-03",
+      "housingUnitPrice": 57.39,
+      "housingIndex": 113.75,
+      "taiexClose": 17693.47,
+      "taiexReturn": 0.0023390878633687663,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 1,
+      "transactionMedian": 78.19
+    },
+    {
+      "month": "2022-04",
+      "housingUnitPrice": 57.57,
+      "housingIndex": 114.11,
+      "taiexClose": 16592.18,
+      "taiexReturn": -0.06224273700975562,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2022-05",
+      "housingUnitPrice": 57.44,
+      "housingIndex": 113.86,
+      "taiexClose": 16807.77,
+      "taiexReturn": 0.0129934704179921,
+      "rediscountRate": 1.375,
+      "securedRate": 1.75,
+      "transactionCount": 2,
+      "transactionMedian": 116.6
+    },
+    {
+      "month": "2022-06",
+      "housingUnitPrice": 57.69,
+      "housingIndex": 114.36,
+      "taiexClose": 14825.73,
+      "taiexReturn": -0.11792403156397314,
+      "rediscountRate": 1.5,
+      "securedRate": 1.875,
+      "transactionCount": 6,
+      "transactionMedian": 91.02
+    },
+    {
+      "month": "2022-07",
+      "housingUnitPrice": 58.06,
+      "housingIndex": 115.08,
+      "taiexClose": 15000.07,
+      "taiexReturn": 0.011759286052019034,
+      "rediscountRate": 1.5,
+      "securedRate": 1.875,
+      "transactionCount": 5,
+      "transactionMedian": 90.86
+    },
+    {
+      "month": "2022-08",
+      "housingUnitPrice": 58.25,
+      "housingIndex": 115.46,
+      "taiexClose": 15095.44,
+      "taiexReturn": 0.006357970329471849,
+      "rediscountRate": 1.5,
+      "securedRate": 1.875,
+      "transactionCount": 1,
+      "transactionMedian": 83.53
+    },
+    {
+      "month": "2022-09",
+      "housingUnitPrice": 58.34,
+      "housingIndex": 115.64,
+      "taiexClose": 13424.58,
+      "taiexReturn": -0.11068640596100547,
+      "rediscountRate": 1.625,
+      "securedRate": 2,
+      "transactionCount": 3,
+      "transactionMedian": 113.25
+    },
+    {
+      "month": "2022-10",
+      "housingUnitPrice": 58.44,
+      "housingIndex": 115.83,
+      "taiexClose": 12949.75,
+      "taiexReturn": -0.03537019407683517,
+      "rediscountRate": 1.625,
+      "securedRate": 2,
+      "transactionCount": 1,
+      "transactionMedian": 92.03
+    },
+    {
+      "month": "2022-11",
+      "housingUnitPrice": 58.54,
+      "housingIndex": 116.04,
+      "taiexClose": 14879.55,
+      "taiexReturn": 0.14902218189540334,
+      "rediscountRate": 1.625,
+      "securedRate": 2,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2022-12",
+      "housingUnitPrice": 58.36,
+      "housingIndex": 115.68,
+      "taiexClose": 14137.69,
+      "taiexReturn": -0.049857690588761,
+      "rediscountRate": 1.75,
+      "securedRate": 2.125,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-01",
+      "housingUnitPrice": 58.25,
+      "housingIndex": 115.47,
+      "taiexClose": 15265.2,
+      "taiexReturn": 0.07975206699255678,
+      "rediscountRate": 1.75,
+      "securedRate": 2.125,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-02",
+      "housingUnitPrice": 58.12,
+      "housingIndex": 115.21,
+      "taiexClose": 15503.79,
+      "taiexReturn": 0.01562966747897179,
+      "rediscountRate": 1.75,
+      "securedRate": 2.125,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-03",
+      "housingUnitPrice": 57.98,
+      "housingIndex": 114.93,
+      "taiexClose": 15868.06,
+      "taiexReturn": 0.023495545282798503,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 2,
+      "transactionMedian": 111.75
+    },
+    {
+      "month": "2023-04",
+      "housingUnitPrice": 58.05,
+      "housingIndex": 115.05,
+      "taiexClose": 15579.18,
+      "taiexReturn": -0.018205124003816422,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-05",
+      "housingUnitPrice": 58.2,
+      "housingIndex": 115.36,
+      "taiexClose": 16578.96,
+      "taiexReturn": 0.06417410929201657,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-06",
+      "housingUnitPrice": 58.22,
+      "housingIndex": 115.39,
+      "taiexClose": 16915.54,
+      "taiexReturn": 0.02030163532573827,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-07",
+      "housingUnitPrice": 58.43,
+      "housingIndex": 115.81,
+      "taiexClose": 17145.43,
+      "taiexReturn": 0.013590461788390995,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-08",
+      "housingUnitPrice": 58.95,
+      "housingIndex": 116.85,
+      "taiexClose": 16634.51,
+      "taiexReturn": -0.029799194304254945,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-09",
+      "housingUnitPrice": 59.29,
+      "housingIndex": 117.53,
+      "taiexClose": 16353.74,
+      "taiexReturn": -0.01687876589090984,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-10",
+      "housingUnitPrice": 59.63,
+      "housingIndex": 118.19,
+      "taiexClose": 16001.27,
+      "taiexReturn": -0.021552868028964587,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-11",
+      "housingUnitPrice": 60.08,
+      "housingIndex": 119.09,
+      "taiexClose": 17433.85,
+      "taiexReturn": 0.0895291436242247,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2023-12",
+      "housingUnitPrice": 60.4,
+      "housingIndex": 119.72,
+      "taiexClose": 17930.81,
+      "taiexReturn": 0.02850546494319974,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-01",
+      "housingUnitPrice": 60.81,
+      "housingIndex": 120.53,
+      "taiexClose": 17889.56,
+      "taiexReturn": -0.002300509569840961,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-02",
+      "housingUnitPrice": 61.68,
+      "housingIndex": 122.25,
+      "taiexClose": 18966.77,
+      "taiexReturn": 0.060214449097685974,
+      "rediscountRate": 1.875,
+      "securedRate": 2.25,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-03",
+      "housingUnitPrice": 62.84,
+      "housingIndex": 124.56,
+      "taiexClose": 20294.45,
+      "taiexReturn": 0.07000032161511952,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-04",
+      "housingUnitPrice": 63.87,
+      "housingIndex": 126.6,
+      "taiexClose": 20396.6,
+      "taiexReturn": 0.005033395829894273,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-05",
+      "housingUnitPrice": 64.47,
+      "housingIndex": 127.79,
+      "taiexClose": 21174.22,
+      "taiexReturn": 0.038124981614582956,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 2,
+      "transactionMedian": 127.32
+    },
+    {
+      "month": "2024-06",
+      "housingUnitPrice": 64.72,
+      "housingIndex": 128.28,
+      "taiexClose": 23032.25,
+      "taiexReturn": 0.08774963139138059,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-07",
+      "housingUnitPrice": 65.2,
+      "housingIndex": 129.23,
+      "taiexClose": 22199.35,
+      "taiexReturn": -0.036162337591854964,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-08",
+      "housingUnitPrice": 65.67,
+      "housingIndex": 130.16,
+      "taiexClose": 22268.09,
+      "taiexReturn": 0.003096487059305863,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-09",
+      "housingUnitPrice": 65.85,
+      "housingIndex": 130.53,
+      "taiexClose": 22224.54,
+      "taiexReturn": -0.0019557133099425803,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-10",
+      "housingUnitPrice": 65.95,
+      "housingIndex": 130.72,
+      "taiexClose": 22820.43,
+      "taiexReturn": 0.026812253481961805,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-11",
+      "housingUnitPrice": 65.95,
+      "housingIndex": 130.75,
+      "taiexClose": 22262.5,
+      "taiexReturn": -0.02444870670710413,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2024-12",
+      "housingUnitPrice": 65.92,
+      "housingIndex": 130.65,
+      "taiexClose": 23035.1,
+      "taiexReturn": 0.034704098820887076,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2025-01",
+      "housingUnitPrice": 65.7,
+      "housingIndex": 130.21,
+      "taiexClose": 23525.41,
+      "taiexReturn": 0.021285342802939918,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 5,
+      "transactionMedian": 73.6
+    },
+    {
+      "month": "2025-02",
+      "housingUnitPrice": 65.76,
+      "housingIndex": 130.34,
+      "taiexClose": 23053.18,
+      "taiexReturn": -0.020073188947610246,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2025-03",
+      "housingUnitPrice": 64.78,
+      "housingIndex": 128.39,
+      "taiexClose": 20695.9,
+      "taiexReturn": -0.10225400573803696,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 2,
+      "transactionMedian": 159.31
+    },
+    {
+      "month": "2025-04",
+      "housingUnitPrice": 64.9,
+      "housingIndex": 128.62,
+      "taiexClose": 20235.03,
+      "taiexReturn": -0.02226866190888063,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2025-05",
+      "housingUnitPrice": 64.62,
+      "housingIndex": 128.06,
+      "taiexClose": 21347.3,
+      "taiexReturn": 0.05496754884969286,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2025-06",
+      "housingUnitPrice": 64.36,
+      "housingIndex": 127.57,
+      "taiexClose": 22256.02,
+      "taiexReturn": 0.04256838101305557,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 2,
+      "transactionMedian": 71.93
+    },
+    {
+      "month": "2025-07",
+      "housingUnitPrice": 64.11,
+      "housingIndex": 127.04,
+      "taiexClose": 23542.52,
+      "taiexReturn": 0.05780458500666336,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 0,
+      "transactionMedian": null
+    },
+    {
+      "month": "2025-08",
+      "housingUnitPrice": 63.79,
+      "housingIndex": 126.43,
+      "taiexClose": 24233.1,
+      "taiexReturn": 0.029333308413882545,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 1,
+      "transactionMedian": 143.59
+    },
+    {
+      "month": "2025-09",
+      "housingUnitPrice": 64.2,
+      "housingIndex": 127.25,
+      "taiexClose": 25820.54,
+      "taiexReturn": 0.06550709566667089,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 5,
+      "transactionMedian": 59.99
+    },
+    {
+      "month": "2025-10",
+      "housingUnitPrice": 64.43,
+      "housingIndex": 127.69,
+      "taiexClose": 28233.35,
+      "taiexReturn": 0.09344537333456224,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 2,
+      "transactionMedian": 77.93
+    },
+    {
+      "month": "2025-11",
+      "housingUnitPrice": 64.14,
+      "housingIndex": 127.11,
+      "taiexClose": 27626.48,
+      "taiexReturn": -0.02149479250602564,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 7,
+      "transactionMedian": 88.93
+    },
+    {
+      "month": "2025-12",
+      "housingUnitPrice": 63.5,
+      "housingIndex": 125.85,
+      "taiexClose": 28963.6,
+      "taiexReturn": 0.048399940926241745,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 13,
+      "transactionMedian": 94.47
+    },
+    {
+      "month": "2026-01",
+      "housingUnitPrice": 63.57,
+      "housingIndex": 125.97,
+      "taiexClose": 32063.75,
+      "taiexReturn": 0.10703607286387057,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 25,
+      "transactionMedian": 79.63
+    },
+    {
+      "month": "2026-02",
+      "housingUnitPrice": 63.98,
+      "housingIndex": 126.81,
+      "taiexClose": 35414.49,
+      "taiexReturn": 0.10450243655218114,
+      "rediscountRate": 2,
+      "securedRate": 2.375,
+      "transactionCount": 23,
+      "transactionMedian": 79.77
+    }
+  ],
+  "sources": [
+    {
+      "name": "臺北市住宅價格月指數",
+      "url": "https://data.taipei/dataset/detail?id=ce4ea2c6-6334-44f8-945a-5705492b187d"
+    },
+    {
+      "name": "加權股價指數",
+      "url": "https://www.twse.com.tw/zh/indices/taiex/mi-5min-hist.html"
+    },
+    {
+      "name": "央行貼放利率",
+      "url": "https://data.gov.tw/dataset/6022"
+    },
+    {
+      "name": "臺北市實價周報（成交量）",
+      "url": "https://data.taipei/dataset/detail?id=a9a97996-3a55-46c8-9076-e5ebdefad6dc"
+    }
+  ],
+  "caveats": [
+    "相關性不等於因果；總經變數與房價可能存在落後／領先關係。",
+    "實價周報成交量僅涵蓋部分臺北交易，與官方指數時間定義不同。",
+    "未納入國際事件、建照量等變數；可於 events 與營建統計擴充後重跑。"
+  ]
+}

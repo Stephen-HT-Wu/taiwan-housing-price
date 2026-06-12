@@ -1,19 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { AnalysisPanel } from './components/AnalysisPanel';
 import { HousingContourMap } from './components/HousingContourMap';
 import { ControlPanel } from './components/ControlPanel';
 import { MapLegend } from './components/MapLegend';
 import { MrtLineLegend } from './components/MrtLineLegend';
+import { loadMultivariateAnalysis } from './lib/analysis';
 import {
   filterTransactions,
   getPriceStats,
   loadHousingData,
 } from './lib/data';
-import type { DataLayer, HousingDataset } from './types';
+import type { AppView, DataLayer, HousingDataset, MultivariateAnalysis } from './types';
 import './App.css';
 
 export default function App() {
+  const [view, setView] = useState<AppView>('map');
   const [data, setData] = useState<HousingDataset | null>(null);
+  const [analysis, setAnalysis] = useState<MultivariateAnalysis | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
@@ -35,9 +40,16 @@ export default function App() {
   );
 
   useEffect(() => {
-    loadHousingData()
-      .then((d) => {
+    Promise.all([
+      loadHousingData(),
+      loadMultivariateAnalysis().catch((e) => {
+        setAnalysisError(e instanceof Error ? e.message : '分析資料載入失敗');
+        return null;
+      }),
+    ])
+      .then(([d, a]) => {
         setData(d);
+        setAnalysis(a);
         const stats = getPriceStats(d.transactions);
         setPriceRange([Math.floor(stats.min), Math.ceil(stats.max)]);
       })
@@ -79,7 +91,38 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app ${view === 'analysis' ? 'app--analysis' : ''}`}>
+      <nav className="view-nav">
+        <button
+          type="button"
+          className={view === 'map' ? 'view-nav-btn active' : 'view-nav-btn'}
+          onClick={() => setView('map')}
+        >
+          地圖
+        </button>
+        <button
+          type="button"
+          className={view === 'analysis' ? 'view-nav-btn active' : 'view-nav-btn'}
+          onClick={() => setView('analysis')}
+        >
+          多元分析
+        </button>
+      </nav>
+      {view === 'analysis' ? (
+        <main className="analysis-wrap">
+          {analysis ? (
+            <AnalysisPanel data={analysis} />
+          ) : (
+            <div className="analysis-missing">
+              <p>{analysisError ?? '尚未產生分析結果'}</p>
+              <p>
+                請在專案根目錄執行：<code>npm run fetch-analysis</code>
+              </p>
+            </div>
+          )}
+        </main>
+      ) : (
+        <>
       <ControlPanel
         selectedDistricts={selectedDistricts}
         onDistrictsChange={setSelectedDistricts}
@@ -109,6 +152,8 @@ export default function App() {
           outlierCount={colorDomain.outlierCount}
         />
       </main>
+        </>
+      )}
     </div>
   );
 }

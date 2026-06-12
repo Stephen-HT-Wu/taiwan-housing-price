@@ -69,3 +69,37 @@ export interface MapBounds {
 }
 
 export type DataLayer = 'contour' | 'points' | 'district' | 'mrt';
+
+export type AppView = 'map' | 'analysis';
+
+export interface MultivariateVariable {
+  id: string;
+  label: string;
+  coefficient: number;
+  stdCoefficient: number;
+  partialR2: number;
+}
+
+export interface MultivariateAnalysis {
+  updatedAt: string;
+  description: string;
+  period: { start: string; end: string };
+  observations: number;
+  dependentVariable: { id: string; label: string };
+  model: { r2: number; adjR2: number; intercept: number };
+  variables: MultivariateVariable[];
+  correlation: Record<string, Record<string, number>>;
+  timeSeries: {
+    month: string;
+    housingUnitPrice: number;
+    housingIndex: number;
+    taiexClose: number;
+    taiexReturn: number;
+    rediscountRate: number;
+    securedRate: number;
+    transactionCount: number;
+    transactionMedian: number | null;
+  }[];
+  sources: { name: string; url: string }[];
+  caveats: string[];
+}
